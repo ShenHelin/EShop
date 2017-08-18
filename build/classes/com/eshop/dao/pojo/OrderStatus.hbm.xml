@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 13:10:48 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.OrderStatus" table="ORDERSTATUS">
+        <id name="orderId" type="int">
+            <column name="ORDERID" />
+            <generator class="foreign">
+            	<param name="property">orderInfo</param>
+            </generator>
+        </id>
+        <property name="isSend" type="java.lang.String">
+            <column name="ISSEND" />
+        </property>
+        <property name="isPay" type="java.lang.String">
+            <column name="ISPAY" />
+        </property>
+        <one-to-one name="orderInfo" class="com.eshop.dao.pojo.OrderInfo" constrained="true"></one-to-one>
+    </class>
+</hibernate-mapping>

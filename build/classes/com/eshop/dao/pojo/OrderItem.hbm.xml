@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 10:46:29 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.OrderItem" table="ORDERITEM">
+        <id name="orderItemId" type="int">
+            <column name="ORDERITEMID" />
+            <generator class="native" />
+        </id>
+        <property name="amount" type="int">
+            <column name="AMOUNT" />
+        </property>
+        <property name="price" type="double">
+            <column name="PRICE" />
+        </property>
+        <many-to-one name="orderInfo" class="com.eshop.dao.pojo.OrderInfo" fetch="join">
+            <column name="ORDERID" />
+        </many-to-one>
+        <many-to-one name="goods" class="com.eshop.dao.pojo.Goods" fetch="join">
+            <column name="GOODSID" />
+        </many-to-one>
+        
+        <set name="commentSet" table="COMMENT" inverse="true" lazy="false">
+        	<key>
+        		<column name="ORDERITEMID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.Comment"/>
+        </set>
+        
+        
+    </class>
+</hibernate-mapping>

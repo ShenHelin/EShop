@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 10:17:35 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.GoodsClass" table="GOODSCLASS">
+        <id name="classId" type="int">
+            <column name="CLASSID" />
+            <generator class="native" />
+        </id>
+        <property name="className" type="java.lang.String">
+            <column name="CLASSNAME" />
+        </property>
+        <property name="classNo" type="java.lang.String">
+            <column name="CLASSNO" />
+        </property>
+        <property name="superClass" type="java.lang.String">
+            <column name="SUPERCLASS" />
+        </property>
+        <set name="goodsSet" table="GOODS" inverse="true" lazy="false">
+            <key>
+                <column name="CLASSID" />
+            </key>
+            <one-to-many class="com.eshop.dao.pojo.Goods" />
+        </set>
+    </class>
+</hibernate-mapping>

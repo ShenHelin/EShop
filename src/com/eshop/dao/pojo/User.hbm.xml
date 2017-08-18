@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-17 21:59:16 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.User" table="USER">
+        <id name="userId" type="int">
+        <!--  access="field" -->
+            <column name="USERID" />
+            <generator class="native" />
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <one-to-one name="userInfo" class="com.eshop.dao.pojo.UserInfo"></one-to-one>
+        <set name="userAddressSet" table="USERADDRESS" inverse="true" lazy="false">
+            <key>
+                <column name="USERID" />
+            </key>
+            <one-to-many class="com.eshop.dao.pojo.UserAddress" />
+        </set>
+        
+        <set name="accountSet" table="ACCOUNT" inverse="true" lazy="false">
+            <key>
+                <column name="USERID" />
+            </key>
+            <one-to-many class="com.eshop.dao.pojo.Account" />
+        </set>
+        
+         <set name="sellInfoSet" table="SELLINFO" inverse="true" lazy="false">
+        	<key>
+        		<column name="USERID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.SellInfo"/>
+        </set>
+        
+        <set name="shoppingCartSet" table="SHOPPINGCART" inverse="true" lazy="false">
+        	<key>
+        		<column name="USERID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.ShoppingCart"/>
+        </set>
+        
+        <set name="commentSet" table="COMMENT" inverse="true" lazy="false">
+        	<key>
+        		<column name="USERID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.Comment"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

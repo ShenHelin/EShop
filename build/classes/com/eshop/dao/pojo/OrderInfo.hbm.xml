@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 10:40:12 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.OrderInfo" table="ORDERINFO">
+        <id name="orderId" type="int">
+            <column name="ORDERID" />
+            <generator class="native" />
+        </id>
+        <property name="orderNo" type="java.lang.String">
+            <column name="ORDERNO" />
+        </property>
+        <property name="submitTime" type="java.lang.String">
+            <column name="SUBMITTIME" />
+        </property>
+        <property name="orderName" type="java.lang.String">
+            <column name="ORDERNAME" />
+        </property>
+        <property name="orderAddress" type="java.lang.String">
+            <column name="ORDERADDRESS" />
+        </property>
+        <property name="orderCode" type="java.lang.String">
+            <column name="ORDERCODE" />
+        </property>
+        <property name="orderPhone" type="java.lang.String">
+            <column name="ORDERPHONE" />
+        </property>
+        
+        <one-to-one name="orderStatus" class="com.eshop.dao.pojo.OrderStatus"></one-to-one>
+        
+        <property name="totalPrice" type="double">
+            <column name="TOTALPRICE" />
+        </property>
+        <many-to-one name="user" class="com.eshop.dao.pojo.User" fetch="join">
+            <column name="USERID" />
+        </many-to-one>
+        
+        <set name="orderItemSet" table="ORDERITEM" inverse="true" lazy="false">
+        	<key>
+        		<column name="ORDERID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.OrderItem"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

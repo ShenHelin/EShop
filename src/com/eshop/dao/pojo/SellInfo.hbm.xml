@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 8:55:19 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.SellInfo" table="SELLINFO">
+        <id name="sellId" type="int">
+            <column name="SELLID" />
+            <generator class="native" />
+        </id>
+        <property name="sellNo" type="java.lang.String">
+            <column name="SELLNO" />
+        </property>
+        <property name="submitTime" type="java.lang.String">
+            <column name="SUBMITTIME" />
+        </property>
+        <property name="totalPrice" type="double">
+            <column name="TOTALPRICE" />
+        </property>
+        <many-to-one name="admin" class="com.eshop.dao.pojo.Admin" fetch="join">
+            <column name="ADMINID" />
+        </many-to-one>
+        <many-to-one name="user" class="com.eshop.dao.pojo.User" fetch="join">
+            <column name="USERID" />
+        </many-to-one>
+        <set name="sellItemSet" table="SELLITEM" inverse="true" lazy="false">
+        	<key>
+        		<column name="SELLID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.SellItem"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

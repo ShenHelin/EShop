@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-17 21:59:16 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.UserAddress" table="USERADDRESS">
+        <id name="addressId" type="int">
+            <column name="ADDRESSID" />
+            <generator class="native" />
+        </id>
+        <property name="addressName" type="java.lang.String">
+            <column name="ADDRESSNAME" />
+        </property>
+        <property name="addressText" type="java.lang.String">
+            <column name="ADDRESSTEXT" />
+        </property>
+        <property name="addressCode" type="java.lang.String">
+            <column name="ADDRESSCODE" />
+        </property>
+        <property name="addressPhone" type="java.lang.String">
+            <column name="ADDRESSPHONE" />
+        </property>
+        <property name="isDefault" type="java.lang.String">
+            <column name="ISDEFAULT" />
+        </property>
+        <many-to-one name="user" class="com.eshop.dao.pojo.User" fetch="join">
+            <column name="USERID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

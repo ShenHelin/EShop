@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 8:45:11 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.Admin" table="ADMIN">
+        <id name="adminId" type="int">
+            <column name="ADMINID" />
+            <generator class="native" />
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" />
+        </property>
+        <property name="money" type="double">
+            <column name="MONEY" />
+        </property>
+        
+        <set name="sellInfoSet" table="SELLINFO" inverse="true" lazy="true">
+        	<key>
+        		<column name="ADMINID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.SellInfo"/>
+        </set>
+        
+        <set name="goodsSet" table="GOODS" inverse="true" lazy="false">
+        	<key>
+        		<column name="ADMINID"></column>
+        	</key>
+        	<one-to-many class="com.eshop.dao.pojo.Goods"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

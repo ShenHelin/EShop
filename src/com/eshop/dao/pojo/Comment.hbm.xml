@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-8-18 10:56:11 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.eshop.dao.pojo.Comment" table="COMMENT">
+        <id name="CommentId" type="int">
+            <column name="COMMENTID" />
+            <generator class="native" />
+        </id>
+        <property name="content" type="java.lang.String">
+            <column name="CONTENT" />
+        </property>
+        <property name="date" type="java.lang.String">
+            <column name="DATE" />
+        </property>
+        <property name="commentStatus" type="java.lang.String">
+            <column name="COMMENTSTATUS" />
+        </property>
+        <many-to-one name="orderItem" class="com.eshop.dao.pojo.OrderItem" fetch="join">
+            <column name="ORDERITEMID" />
+        </many-to-one>
+        <many-to-one name="user" class="com.eshop.dao.pojo.User" fetch="join">
+            <column name="USERID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IUserInfoDao;
 import com.eshop.dao.pojo.UserInfo;
@@ -17,6 +20,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 	@Qualifier("userInfoDao")
 	private IUserInfoDao userInfoDao;
 
+	@Transactional
 	@Override
 	public String save(UserInfo t) {
 		String msg = "error";
@@ -29,6 +33,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(UserInfo t) {
 		String msg = "error";
@@ -41,6 +46,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(UserInfo t) {
 		String msg = "error";
@@ -53,6 +59,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserInfo> findAll() {
 		List<UserInfo> userInfoList = null;
@@ -64,6 +71,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfoList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public UserInfo findById(Integer k) {
 		UserInfo userInfo = null;
@@ -75,6 +83,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfo;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserInfo> findByRegTime(String firstTime, String secondTime) {
 		// TODO Auto-generated method stub
@@ -87,6 +96,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfoList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserInfo> findByName(String name) {
 		// TODO Auto-generated method stub
@@ -99,6 +109,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfoList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserInfo> findBySex(String sex) {
 		// TODO Auto-generated method stub
@@ -111,6 +122,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfoList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserInfo> findByPhone(String phone) {
 		// TODO Auto-generated method stub
@@ -123,6 +135,7 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfoList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserInfo> findByEmail(String email) {
 		// TODO Auto-generated method stub
@@ -135,6 +148,9 @@ public class ServiceUserInfoImpl implements IUserInfoService {
 		return userInfoList;
 	}
 
+	@Transactional(readOnly=true,
+			propagation=Propagation.REQUIRED,
+			isolation=Isolation.READ_COMMITTED)
 	@Override
 	public List<UserInfo> findByPage(int page, int size) {
 		// TODO Auto-generated method stub

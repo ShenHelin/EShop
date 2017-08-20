@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IUserDao;
 import com.eshop.dao.pojo.User;
@@ -17,6 +20,7 @@ public class ServiceUserImpl implements IUserService {
 	@Qualifier("userDao")
 	private IUserDao userDao;
 
+	@Transactional
 	@Override
 	public String save(User t) {
 		String msg = "error";
@@ -29,6 +33,7 @@ public class ServiceUserImpl implements IUserService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(User t) {
 		String msg = "error";
@@ -40,7 +45,8 @@ public class ServiceUserImpl implements IUserService {
 		}
 		return msg;
 	}
-
+	
+	@Transactional
 	@Override
 	public String delete(User t) {
 		String msg = "error";
@@ -53,6 +59,7 @@ public class ServiceUserImpl implements IUserService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<User> findAll() {
 		List<User> userList = null;
@@ -64,6 +71,7 @@ public class ServiceUserImpl implements IUserService {
 		return userList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public User findById(Integer k) {
 		User user = null;
@@ -75,6 +83,7 @@ public class ServiceUserImpl implements IUserService {
 		return user;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<User> findByName(String username) {
 		// TODO Auto-generated method stub
@@ -87,6 +96,9 @@ public class ServiceUserImpl implements IUserService {
 		return userList;
 	}
 
+	@Transactional(readOnly=true,
+			propagation=Propagation.REQUIRED,
+			isolation=Isolation.READ_COMMITTED)
 	@Override
 	public List<User> findByPage(int page, int size) {
 		// TODO Auto-generated method stub

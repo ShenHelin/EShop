@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<package name="goods_crud" namespace="/" extends="struts-default">
+	
+			<global-results>
+				<result name="error" type="redirect">/error.html</result>
+			</global-results>
+			
+			<!-- 响应
+			product_find_findAll  product_find_findById  product_find_findByName
+			 -->
+<!-- 			<action name="account_find_*" class="productAction" method="{1}">
+				<result name="success" type="dispatcher">/product_findAll.jsp</result>
+				<result name="updatesuccess" type="dispatcher">/product_update.jsp</result>
+			</action> -->
+			
+			<!-- 使用通配符* ，简化struts.xml的配置
+			要求，使用通配符时，必须写明跳转注释
+			product_save  product_delete  product_update
+			 -->	
+			<action name="goods_*" class="goodsAction" method="{1}">
+				<result name="success" type="redirect">success.html</result>
+			</action> 
+			
+	</package>
+
+</struts>

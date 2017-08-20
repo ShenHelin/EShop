@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IShoppingCartDao;
 import com.eshop.dao.pojo.ShoppingCart;
@@ -17,6 +20,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 	@Qualifier("shoppingCartDao")
 	private IShoppingCartDao shoppingCartDao;
 
+	@Transactional
 	@Override
 	public String save(ShoppingCart t) {
 		String msg = "error";
@@ -29,6 +33,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(ShoppingCart t) {
 		String msg = "error";
@@ -41,6 +46,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(ShoppingCart t) {
 		String msg = "error";
@@ -53,6 +59,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<ShoppingCart> findAll() {
 		List<ShoppingCart> shoppingCartList = null;
@@ -64,6 +71,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return shoppingCartList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public ShoppingCart findById(Integer k) {
 		ShoppingCart shoppingCart = null;
@@ -75,6 +83,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return shoppingCart;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<ShoppingCart> findByUserId(int userId) {
 		// TODO Auto-generated method stub
@@ -87,6 +96,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return shoppingCartList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<ShoppingCart> findByGoodsId(int goodsId) {
 		// TODO Auto-generated method stub
@@ -99,6 +109,9 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		return shoppingCartList;
 	}
 
+	@Transactional(readOnly=true,
+			propagation=Propagation.REQUIRED,
+			isolation=Isolation.READ_COMMITTED)
 	@Override
 	public List<ShoppingCart> findByPage(int page, int size) {
 		// TODO Auto-generated method stub

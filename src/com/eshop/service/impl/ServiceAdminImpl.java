@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IAdminDao;
 import com.eshop.dao.pojo.Admin;
@@ -17,7 +18,7 @@ public class ServiceAdminImpl implements IAdminService{
 	@Qualifier("adminDao")
 	private IAdminDao adminDao;
 
-
+	@Transactional
 	@Override
 	public String save(Admin t) {
 		String msg = "error";
@@ -30,6 +31,7 @@ public class ServiceAdminImpl implements IAdminService{
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(Admin t) {
 		String msg = "error";
@@ -42,6 +44,7 @@ public class ServiceAdminImpl implements IAdminService{
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(Admin t) {
 		String msg = "error";
@@ -54,6 +57,7 @@ public class ServiceAdminImpl implements IAdminService{
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Admin> findAll() {
 		List<Admin> AdminList = null;
@@ -65,6 +69,7 @@ public class ServiceAdminImpl implements IAdminService{
 		return AdminList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Admin findById(Integer k) {
 		Admin Admin = null;
@@ -76,6 +81,7 @@ public class ServiceAdminImpl implements IAdminService{
 		return Admin;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Admin findByUserName(String username) {
 		// TODO Auto-generated method stub

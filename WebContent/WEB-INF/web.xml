@@ -7,12 +7,12 @@
   </welcome-file-list>
   <!-- 启动Spring的IOC容器服务，使得Struts2可以访问到IOC容器中的Action -->
 	<!-- needed for ContextLoaderListener -->
-<!-- 	<context-param>
+ 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
 
-	Bootstraps the root web application context before servlet initialization
+	<!-- Bootstraps the root web application context before servlet initialization -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -24,5 +24,5 @@
   <filter-mapping>
     <filter-name>struts2</filter-name>
     <url-pattern>*</url-pattern>
-  </filter-mapping> -->
+  </filter-mapping> 
 </web-app>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<button id="showInfo" type="button" class="btn btn-primary btn-lg">生成json</button>
+	<div id="showInDiv"></div>
+	<table id="showInTable"></table>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+			$(function() 
+			{
+				var jsonArray = {};
+				$("#showInfo").click(function() 
+				{
+					$.ajax({
+						type: "get",
+						//					url:"reports.json",
+						url: "http://localhost:8080/Eshop/goods_findAll.action",
+						success: function(data) {
+							jsonArray = JSON.parse(data);
+							for(var i in jsonArray) {
+								$node = $("<tr></tr>");
+								$node.append("<td>" + jsonArray[i].goodsId + "</td>");
+								$node.append("<td>" + jsonArray[i].goodsName + "</td>");
+								$node.append("<td>" + jsonArray[i].manufacturer + "</td>");
+								$node.append("<td>" + jsonArray[i].description + "</td>");
+								$node.append("<td>" + jsonArray[i].price + "</td>");
+								$node.append("<td>" + jsonArray[i].amount + "</td>");
+								$node.append("<td>" + jsonArray[i].leaveNum + "</td>");
+								$node.append("<td>" + jsonArray[i].regTime + "</td>");
+								$node.append("<td>" + jsonArray[i].image + "</td>");
+								$("#showInTable").append($node);
+							}
+						}
+					});
+				});
+			});
+		</script>
+</body>
+</html>

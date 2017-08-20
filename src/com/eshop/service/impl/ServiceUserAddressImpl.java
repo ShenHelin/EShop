@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IUserAddressDao;
 import com.eshop.dao.pojo.UserAddress;
@@ -17,6 +20,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 	@Qualifier("userAddressDao")
 	private IUserAddressDao userAddressDao;
 
+	@Transactional
 	@Override
 	public String save(UserAddress t) {
 		String msg = "error";
@@ -29,6 +33,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(UserAddress t) {
 		String msg = "error";
@@ -41,6 +46,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(UserAddress t) {
 		String msg = "error";
@@ -53,6 +59,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserAddress> findAll() {
 		List<UserAddress> userAddressList = null;
@@ -64,6 +71,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return userAddressList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public UserAddress findById(Integer k) {
 		UserAddress userAddress = null;
@@ -75,6 +83,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return userAddress;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<UserAddress> findByName(String addressName) {
 		// TODO Auto-generated method stub
@@ -87,6 +96,7 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return userAddressList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public UserAddress findIsDefault() {
 		// TODO Auto-generated method stub
@@ -99,6 +109,9 @@ public class ServiceUserAddressImpl implements IUserAddressService {
 		return userAddressList;
 	}
 
+	@Transactional(readOnly=true,
+			propagation=Propagation.REQUIRED,
+			isolation=Isolation.READ_COMMITTED)
 	@Override
 	public List<UserAddress> findByPage(int page, int size) {
 		// TODO Auto-generated method stub

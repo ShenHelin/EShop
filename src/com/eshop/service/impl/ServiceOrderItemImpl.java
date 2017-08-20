@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IOrderItemDao;
 import com.eshop.dao.pojo.OrderItem;
@@ -17,6 +18,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 	@Qualifier("orderItemDao")
 	private IOrderItemDao orderItemDao;
 
+	@Transactional
 	@Override
 	public String save(OrderItem t) {
 		String msg = "error";
@@ -29,6 +31,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(OrderItem t) {
 		String msg = "error";
@@ -41,6 +44,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(OrderItem t) {
 		String msg = "error";
@@ -53,6 +57,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<OrderItem> findAll() {
 		List<OrderItem> orderItemList = null;
@@ -64,6 +69,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 		return orderItemList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public OrderItem findById(Integer k) {
 		OrderItem orderItem = null;
@@ -75,6 +81,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 		return orderItem;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<OrderItem> findByOrderId(int orderId) {
 		// TODO Auto-generated method stub
@@ -87,6 +94,7 @@ public class ServiceOrderItemImpl implements IOrderItemService {
 		return orderItemList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<OrderItem> findByGoodsId(int goodsId) {
 		// TODO Auto-generated method stub

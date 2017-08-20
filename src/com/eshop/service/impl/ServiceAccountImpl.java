@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IAccountDao;
 import com.eshop.dao.pojo.Account;
@@ -17,7 +18,7 @@ public class ServiceAccountImpl implements IAccountService{
 	@Qualifier("accountDao")
 	private IAccountDao accountDao;
 
-
+	@Transactional
 	@Override
 	public String save(Account t) {
 		String msg = "error";
@@ -30,6 +31,7 @@ public class ServiceAccountImpl implements IAccountService{
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(Account t) {
 		String msg = "error";
@@ -42,6 +44,7 @@ public class ServiceAccountImpl implements IAccountService{
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(Account t) {
 		String msg = "error";
@@ -54,6 +57,7 @@ public class ServiceAccountImpl implements IAccountService{
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Account> findAll() {
 		List<Account> AccountList = null;
@@ -65,6 +69,7 @@ public class ServiceAccountImpl implements IAccountService{
 		return AccountList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Account findById(Integer k) {
 		Account Account = null;
@@ -76,6 +81,7 @@ public class ServiceAccountImpl implements IAccountService{
 		return Account;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Account findByAccountName(String accountName) {
 		// TODO Auto-generated method stub
@@ -88,6 +94,7 @@ public class ServiceAccountImpl implements IAccountService{
 		return account;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Account> findByUserId(int userId) {
 		// TODO Auto-generated method stub

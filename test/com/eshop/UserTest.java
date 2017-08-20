@@ -50,6 +50,12 @@ public class UserTest {
 	}
 	
 	@Test
+	public void testSessionFactory(){
+		System.out.println(dataSource);
+		System.out.println(sessionFactory);
+	}
+	
+	@Test
 	public void testInsertUser(){
 		User user = new User("xiaoming", "123456");
 		UserInfo userInfo = new UserInfo("nnn", "M", "16666666", "666@163.com", "1");

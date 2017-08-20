@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IGoodsDao;
 import com.eshop.dao.pojo.Goods;
@@ -17,7 +20,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 	@Qualifier("goodsDao")
 	private IGoodsDao goodsDao;
 
-
+	@Transactional
 	@Override
 	public String save(Goods t) {
 		String msg = "error";
@@ -30,6 +33,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(Goods t) {
 		String msg = "error";
@@ -42,6 +46,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(Goods t) {
 		String msg = "error";
@@ -54,6 +59,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findAll() {
 		List<Goods> goodsList = null;
@@ -65,6 +71,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Goods findById(Integer k) {
 		Goods goods = null;
@@ -76,6 +83,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goods;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findByGoodsName(String goodsName) {
 		// TODO Auto-generated method stub
@@ -88,6 +96,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findByManufacturer(String manufacturer) {
 		// TODO Auto-generated method stub
@@ -100,6 +109,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findByPrice(double firstPrice, double secondPrice) {
 		// TODO Auto-generated method stub
@@ -112,6 +122,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findByRegTime(String regTime) {
 		// TODO Auto-generated method stub
@@ -124,6 +135,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findByAdminId(int adminId) {
 		// TODO Auto-generated method stub
@@ -136,6 +148,7 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Goods> findByClassId(int classId) {
 		// TODO Auto-generated method stub
@@ -148,6 +161,9 @@ public class ServiceGoodsImpl implements IGoodsService {
 		return goodsList;
 	}
 
+	@Transactional(readOnly=true,
+			propagation=Propagation.REQUIRED,
+			isolation=Isolation.READ_COMMITTED)
 	@Override
 	public List<Goods> findByPage(int page, int size) {
 		// TODO Auto-generated method stub

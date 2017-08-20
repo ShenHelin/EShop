@@ -7,21 +7,22 @@ import java.util.Map;
 import org.apache.struts2.interceptor.RequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.eshop.dao.pojo.Account;
 import com.eshop.service.iservice.IAccountService;
 import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("accountAciont")
+@Controller("accountAction")
+@Scope("prototype")
 public class AccountAction implements ModelDriven<Account>, RequestAware{
 	
 	@Autowired
 	@Qualifier("accountService")
 	private IAccountService accountService;	
+	
 	private Account account = new Account();
-	
-	
 	@Override
 	public Account getModel() {
 		// TODO Auto-generated method stub
@@ -53,7 +54,7 @@ public class AccountAction implements ModelDriven<Account>, RequestAware{
 	public String delete() {
 		return accountService.delete(account);
 	}
-
+	
 	public String findAll() {
 		String msg = "error";
 		List<Account> accountList = accountService.findAll();

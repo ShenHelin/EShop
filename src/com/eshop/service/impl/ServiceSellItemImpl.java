@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.ISellItemDao;
 import com.eshop.dao.pojo.SellItem;
@@ -17,6 +18,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 	@Qualifier("sellItemDao")
 	private ISellItemDao sellItemDao;
 
+	@Transactional
 	@Override
 	public String save(SellItem t) {
 		String msg = "error";
@@ -29,6 +31,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(SellItem t) {
 		String msg = "error";
@@ -41,6 +44,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(SellItem t) {
 		String msg = "error";
@@ -53,6 +57,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<SellItem> findAll() {
 		List<SellItem> sellItemList = null;
@@ -64,6 +69,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 		return sellItemList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public SellItem findById(Integer k) {
 		SellItem sellItem = null;
@@ -75,6 +81,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 		return sellItem;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<SellItem> findBySellId(int sellId) {
 		// TODO Auto-generated method stub
@@ -87,6 +94,7 @@ public class ServiceSellItemImpl implements ISellItemService {
 		return sellItemList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<SellItem> findByGoodsId(int goodsId) {
 		// TODO Auto-generated method stub

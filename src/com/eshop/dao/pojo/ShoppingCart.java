@@ -1,6 +1,12 @@
 package com.eshop.dao.pojo;
 
-public class ShoppingCart {
+import java.io.Serializable;
+
+public class ShoppingCart implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int shoppingCartId;
 	private User user;
 	private Goods goods;
@@ -32,6 +38,10 @@ public class ShoppingCart {
 	public ShoppingCart(int amount) {
 		super();
 		this.amount = amount;
+	}
+	
+	public ShoppingCart() {
+		super();
 	}
 	@Override
 	public String toString() {

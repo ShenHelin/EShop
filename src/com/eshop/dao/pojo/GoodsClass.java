@@ -1,9 +1,14 @@
 package com.eshop.dao.pojo;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GoodsClass {
+public class GoodsClass implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int classId;
 	private String className;
 	private String classNo;

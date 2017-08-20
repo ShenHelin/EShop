@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.ICommentDao;
 import com.eshop.dao.pojo.Comment;
@@ -17,7 +18,7 @@ public class ServiceCommentImpl implements ICommentService {
 	@Qualifier("commentDao")
 	private ICommentDao commentDao;
 
-
+	@Transactional
 	@Override
 	public String save(Comment t) {
 		String msg = "error";
@@ -30,6 +31,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(Comment t) {
 		String msg = "error";
@@ -42,6 +44,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(Comment t) {
 		String msg = "error";
@@ -54,6 +57,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Comment> findAll() {
 		List<Comment> CommentList = null;
@@ -65,6 +69,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return CommentList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Comment findById(Integer k) {
 		Comment Comment = null;
@@ -76,6 +81,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return Comment;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Comment> findByOrderItemId(int orderItemId) {
 		// TODO Auto-generated method stub
@@ -88,6 +94,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return commentList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Comment> findByUserId(int userId) {
 		// TODO Auto-generated method stub
@@ -100,6 +107,7 @@ public class ServiceCommentImpl implements ICommentService {
 		return commentList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Comment> findByCommentStatus(int commentStatus) {
 		// TODO Auto-generated method stub

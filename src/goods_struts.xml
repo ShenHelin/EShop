@@ -5,6 +5,7 @@
 
 <struts>
 
+	<constant name="struts.custom.i18n.resources" value="upload"></constant>
 	<package name="goods_crud" namespace="/" extends="struts-default">
 	
 			<global-results>
@@ -23,10 +24,39 @@
 			要求，使用通配符时，必须写明跳转注释
 			product_save  product_delete  product_update
 			 -->	
+			 
+			 
+			 
+			 
+			 
+				
+		<action name="upload" class="goodsAction">
+			<result>/index.jsp</result>
+			<result name="input">/error.jsp</result>
+			<!-- 配置拦截器限制上传文件的大小和类型 -->
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/jpeg,image/png,image/gif,image/bmp</param>
+				<param name="maximumSize">200*1024</param><!-- 最大是2M,也可写成 -->
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+			 
+			
 			<action name="goods_*" class="goodsAction" method="{1}">
-				<result name="success" type="redirect">success.html</result>
+				<result name="success" type="dispatcher">home_page.jsp</result>
+				<result name="saveSuccess" type="redirect">goods_findAll.action</result>
+				<result name="adminGoodsSuccess" type="dispatcher">admin_goodsList.jsp</result>
+				<result name="findByIdSuccess" type="dispatcher">detail1.jsp</result>
 			</action> 
 			
 	</package>
+	
+	
+
+
+	
+	
+	
 
 </struts>

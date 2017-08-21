@@ -60,7 +60,7 @@ public class DaoGoodsImpl implements IGoodsDao{
 		return sessionFactory.getCurrentSession().createQuery("from Goods g where g.manufacturer like :manufacturer")
 				.setParameter("manufacturer", "%" + manufacturer + "%").list();
 	}
-
+	
 	@Override
 	public List<Goods> findByPrice(double firstPrice, double secondPrice) throws Exception {
 		// TODO Auto-generated method stub
@@ -76,8 +76,8 @@ public class DaoGoodsImpl implements IGoodsDao{
 	@Override
 	public List<Goods> findByAdminId(int adminId) throws Exception {
 		// TODO Auto-generated method stub
-		return sessionFactory.getCurrentSession().createQuery("from Goods g where g.adminId like :adminId")
-				.setParameter("adminId", "%" + adminId + "%").list();
+		return sessionFactory.getCurrentSession().createQuery("from Goods g where g.admin.adminId=:adminId")
+				.setParameter("adminId",adminId).list();
 	}
 
 	@Override

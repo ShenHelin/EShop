@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.eshop.dao.idao.IAdminDao;
 import com.eshop.dao.pojo.Admin;
+import com.eshop.dao.pojo.Goods;
 
 @Repository("adminDao")
 public class DaoAdminImpl implements IAdminDao{
@@ -19,33 +20,31 @@ public class DaoAdminImpl implements IAdminDao{
 	
 	
 	@Override
-	public void save(Admin t) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void save(Admin g) throws Exception {
+		sessionFactory.getCurrentSession().save(g);
 	}
 
 	@Override
-	public void update(Admin t) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void update(Admin g) throws Exception {
+		sessionFactory.getCurrentSession().update(g);
 	}
 
 	@Override
-	public void delete(Admin t) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void delete(Admin g) throws Exception {
+		sessionFactory.getCurrentSession().delete(g);
 	}
 
 	@Override
 	public List<Admin> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sessionFactory.getCurrentSession().createQuery("from Admin").list();
+		
 	}
 
 	@Override
 	public Admin findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (Admin) sessionFactory.getCurrentSession().createQuery("from Admin g where g.adminId=:adminId")
+				.setParameter("adminId", k).uniqueResult();
 	}
 
 	@Override

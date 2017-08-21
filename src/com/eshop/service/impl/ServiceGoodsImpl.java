@@ -26,10 +26,11 @@ public class ServiceGoodsImpl implements IGoodsService {
 		String msg = "error";
 		try {
 				goodsDao.save(t);
-				msg = "success";
+				msg = "saveSuccess";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("goodsService   msg= " + msg);
 		return msg;
 	}
 

@@ -2,6 +2,7 @@ package com.eshop.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class GoodsAction extends ActionSupport implements ModelDriven<Goods>, Re
 	@Qualifier("adminService")
 	private IAdminService adminService;
 	private Goods goods = new Goods();
-	private String option;// ִ�����ͣ�findById����update
+	private String option;
 	
 	
 	
@@ -95,9 +96,7 @@ public class GoodsAction extends ActionSupport implements ModelDriven<Goods>, Re
 			request.put("goodsListFromServer", goodsList);
 			msg = "success";
 		}
-		for(int i = 0 ; i<goodsList.size() ; i++){
-			System.out.println(goodsList.get(i).getImage());
-		}
+		
 //		Gson gson = new Gson();
 //		String result = gson.toJson(goodsList.toString());
 //		PrintWriter out = response.getWriter();
@@ -242,13 +241,19 @@ public class GoodsAction extends ActionSupport implements ModelDriven<Goods>, Re
 		System.out.println("contentType: "+contentType);
 		System.out.println("filename: "+filename);
 		
+		filename = System.currentTimeMillis()/1000+filename;
 		// uploadFile上传的文件 file服务器放置上传文件的目录 uploadFileName上传文件名称
-		FileUtils.copyFile(file, new File(filePath, System.currentTimeMillis()/1000+filename));
+		FileUtils.copyFile(file, new File(filePath, filename));
 		result = "上传成功";
 		
+		
+		System.out.println("goodsId:::::::::::::::::: "+goods.getGoodsId());
 		Goods goods1 = goodsService.findById(goods.getGoodsId());
-		goods1.setImage(System.currentTimeMillis()/1000+filename);
+		goods1.setImage(filename);
 		goodsService.update(goods1);
+		
+		PrintWriter out = response.getWriter();
+		out.print(filename);
 		
 		return SUCCESS;
 	}

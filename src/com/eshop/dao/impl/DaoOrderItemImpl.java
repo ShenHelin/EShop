@@ -19,42 +19,43 @@ public class DaoOrderItemImpl implements IOrderItemDao{
 	@Override
 	public void save(OrderItem t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().save(t);
 	}
 
 	@Override
 	public void update(OrderItem t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().update(t);
 	}
 
 	@Override
 	public void delete(OrderItem t) throws Exception {
 		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
 
 	@Override
 	public List<OrderItem> findAll() throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from OrderItem").list();
 	}
 
 	@Override
 	public OrderItem findById(Integer k) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return (OrderItem) sessionFactory.getCurrentSession().createQuery("from OrderItem where orderitemId=:orderitemId").setParameter("orderitemId", k).uniqueResult();
 	}
 
 	@Override
 	public List<OrderItem> findByOrderId(int orderId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from OrderItem where orderId=:orderId").setParameter("orderId", orderId).list();
 	}
 
 	@Override
 	public List<OrderItem> findByGoodsId(int goodsId) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from OrderItem where goodsId=:goodsId").setParameter("goodsId", goodsId).list();
 	}
 }

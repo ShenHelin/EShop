@@ -10,8 +10,18 @@
 				<result name="error" type="redirect">/error.html</result>
 			</global-results>
 
+			<action name="numUpdate" class="shoppingCartAction">
+				<result>/index.jsp</result>
+				<result name="input">/error.jsp</result>
+				<!-- 配置拦截器限制上传文件的大小和类型 -->
+			</action>
+
 			<action name="shoppingCart_*" class="shoppingCartAction" method="{1}">
-				<result name="success" type="redirect">success.html</result>
+				<result name="success" type="redirectAction">goods_findAll.action</result>
+				<result name="deleteSuccess" type="redirectAction">shoppingCart_findByUserId.action</result>
+				<result name="findByUserIdSuccess" type="dispatcher">shoppingCart.jsp</result>
+				<result name="findByUserIdError" type="redirect">shoppingCart.jsp</result>
+				<result name="updateSuccess" type="redirectAction">shoppingCart_findByUserId.action</result>
 			</action> 
 			
 	</package>

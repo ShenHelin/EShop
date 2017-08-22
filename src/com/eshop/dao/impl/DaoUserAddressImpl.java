@@ -18,49 +18,48 @@ public class DaoUserAddressImpl implements IUserAddressDao{
 
 	@Override
 	public void save(UserAddress t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(UserAddress t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(UserAddress t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
-
 	@Override
 	public List<UserAddress> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from UserAddress").list();
 	}
 
 	@Override
 	public UserAddress findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (UserAddress) sessionFactory.getCurrentSession().createQuery("from UserAddress u where u.addressId=:addressId")
+				.setParameter("userAddress", k).uniqueResult();
 	}
 
 	@Override
 	public List<UserAddress> findByName(String addressName) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from UserAddress u where u.addressName like :addressName")
+				.setParameter("addressName", "%" + addressName + "%").list();
 	}
 
 	@Override
 	public UserAddress findIsDefault() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (UserAddress) sessionFactory.getCurrentSession().createQuery("from UserAddress u where u.isDefault=:isDefault")
+				.setParameter("userAddress", 1).uniqueResult();
 	}
 
 	@Override
 	public List<UserAddress> findByPage(int page, int size) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from UserAddress").setFirstResult((page - 1) * size)
+				.setMaxResults(size).list();
 	}
+
 }

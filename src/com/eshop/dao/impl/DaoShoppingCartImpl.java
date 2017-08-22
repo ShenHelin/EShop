@@ -15,52 +15,52 @@ public class DaoShoppingCartImpl implements IShoppingCartDao{
 	@Autowired
 	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
-
+	
 	@Override
 	public void save(ShoppingCart t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(ShoppingCart t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(ShoppingCart t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
 
 	@Override
 	public List<ShoppingCart> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from ShoppingCart").list();
 	}
 
 	@Override
 	public ShoppingCart findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (ShoppingCart) sessionFactory.getCurrentSession().createQuery("from ShoppingCart s where s.shoppingCartId=:shoppingCartId")
+				.setParameter("shoppingCartId", k).uniqueResult();
 	}
 
 	@Override
 	public List<ShoppingCart> findByUserId(int userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from ShoppingCart s where s.user.userId=:userId")
+				.setParameter("userId", userId).list();
 	}
 
 	@Override
 	public List<ShoppingCart> findByGoodsId(int goodsId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from ShoppingCart s where s.goodsId like :goodsId")
+				.setParameter("goodsId", "%" + goodsId + "%").list();
 	}
 
 	@Override
 	public List<ShoppingCart> findByPage(int page, int size) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from ShoppingCart").setFirstResult((page - 1) * size)
+				.setMaxResults(size).list();
 	}
+
 }

@@ -9,9 +9,11 @@
 			<global-results>
 				<result name="error" type="redirect">/error.html</result>
 			</global-results>
-
+			
 			<action name="user_*" class="userAction" method="{1}">
-				<result name="success" type="redirect">success.html</result>
+				<result name="loginSuccess" type="redirectAction">goods_findAll.action</result>
+				<result name="loginError" type="redirect">login.html</result>
+				<result name="registerSuccess" type="redirect">login.html</result>
 			</action> 
 			
 	</package>

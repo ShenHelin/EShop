@@ -36,11 +36,43 @@
   		<script src="common/bootstrap.min.js" type="text/javascript"></script>
   		
   		<script type="text/javascript">
-        function F_Open_dialog() 
-       { 
-            document.getElementById("btn_file").click(); 
-       } 
+  		
 
+  		function F_Open_dialog(){
+  			document.getElementById("btn_file").click();
+  		}
+  		
+  		
+  		
+  		function doUpload(btn) {  
+  		     var formData = new FormData($( "#uploadForm" )[0]);  
+  		     $.ajax({  
+  		          url: 'http://localhost:8080/EShop/upload.action?goodsId='+btn.name ,  
+  		          type: 'POST',  
+  		          data: formData,  
+  		          async: true,  
+  		          cache: true,  
+  		          contentType: false,  
+  		          processData: false,  
+  		          success: function (data) { 
+
+  		            alert(data);  
+  		            $("#img"+btn.name).attr("src", data);  
+  		              
+  		          },  
+  		          error: function (returndata) {  
+  		              alert(returndata);  
+  		          }  
+  		     });  
+  		}  
+        
+        
+        
+        
+        
+        
+        
+		
    		 </script>
       
 	</head>
@@ -88,43 +120,21 @@
 		<div class="col-md-12 column">
 			<div class="row">
 			
-			
-			
-				<%-- <%for(int i=0;i<list.size();i++){ %>
-				<form action="http://localhost:8080/EShop/upload.action?goodsId=<%=list.get(i).getGoodsId() %>" method="post" enctype="multipart/form-data">
-				<div class="col-md-4">					
-					<div class="thumbnail">
-					
-        					<input type="file" id="btn_file" name="upload" style="display:none">
-       						<img width="350" height="180" alt="300x200" src="images/macPro.jpg" onclick="F_Open_dialog()">
-						
-						
-						<div class="caption">
-							<h3>
-								<%=list.get(i).getGoodsName() %>
-							</h3>
-							<p>
-								<%=list.get(i).getDescription() %>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-							</p>
-							<p>
-								 <a class="btn btn-primary" href="#">Action</a> 
-								 <a class="btn" href="#"><input type="submit" value="submit"/></a>
-							</p>
-						</div>
-						
-					</div>
-				</div>
-				
-				</form>
-				<%} %> --%>
-				
 				<c:forEach items="${requestScope.adminGoodsListFromServer }" var="goods" varStatus="s">
-				<form action="http://localhost:8080/EShop/upload.action?goodsId=${goods.goodsId }" method="post" enctype="multipart/form-data">
+				<form id= "uploadForm"> 
 				<div class="col-md-4">					
 					<div class="thumbnail">
 					
-        					<input type="file" id="btn_file" name="upload" style="display:none">
-       						<img width="350" height="180" alt="300x200" src="images/macPro.jpg" onclick="F_Open_dialog()">
+        				<input type="file" id="btn_file" name="upload" style="display:none">
+        				<c:choose>
+        					<c:when test="${goods.image==null }">
+        						<img width="350px" height="180px" src="images/macPro.jpg" onclick="F_Open_dialog()" id="img${goods.goodsId }">
+        					</c:when>
+        					<c:otherwise>
+        						<img width="350px" height="180px" src="${pageContext.request.contextPath }/upload/${goods.image }" onclick="F_Open_dialog()" id="img${goods.goodsId }">
+        					</c:otherwise>
+        				</c:choose>
+       					
 						
 						
 						<div class="caption">
@@ -137,16 +147,18 @@
 							</p>
 							<p>
 								 <a class="btn btn-primary" href="#">Action</a> 
-								 <a class="btn" href="#"><input type="submit" value="submit"/></a>
+								 <a class="btn" href="#">	
+								 <input type="text" name="filename" value= "${goods.goodsId }"/>
+								 <input type="button" value="上传" onclick="doUpload(this)" name="${goods.goodsId }" />
+								 </a>
 							</p>
 						</div>
 						
 					</div>
 				</div>
-				
 				</form>
+    			
 				</c:forEach>
-				
 				
 			</div>
 		</div>

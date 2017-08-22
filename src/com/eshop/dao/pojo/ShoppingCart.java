@@ -45,8 +45,8 @@ public class ShoppingCart implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "ShoppingCart [shoppingCartId=" + shoppingCartId + ", user=" + user.getUsername() + ", goods=" + goods.getGoodsName() + ", amount="
-				+ amount + "]";
+		return "ShoppingCart [shoppingCartId=" + shoppingCartId + ", amount=" + amount + "]";
 	}
+	
 	
 }

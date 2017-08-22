@@ -18,43 +18,51 @@ public class DaoUserImpl implements IUserDao{
 
 	@Override
 	public void save(User t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(User t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(User t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
 
 	@Override
 	public List<User> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from User").list();
 	}
 
 	@Override
 	public User findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (User) sessionFactory.getCurrentSession().createQuery("from User u where u.userId=:userId")
+				.setParameter("userId", k).uniqueResult();
+	}
+	
+	@Override
+	public User findByUP(String username,String password) throws Exception {
+		
+		return (User) sessionFactory.getCurrentSession().createQuery("from User u where u.username=:username and u.password=:password")
+				.setParameter("username", username).setParameter("password", password).uniqueResult();
+		
 	}
 
 	@Override
 	public List<User> findByName(String username) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from User u where u.userName like :userName")
+				.setParameter("userName", "%" + username + "%").list();
 	}
 
 	@Override
 	public List<User> findByPage(int page, int size) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from User").setFirstResult((page - 1) * size)
+				.setMaxResults(size).list();
 	}
+
 }

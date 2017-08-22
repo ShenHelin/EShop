@@ -82,6 +82,18 @@ public class ServiceUserImpl implements IUserService {
 		}
 		return user;
 	}
+	
+	@Transactional(readOnly=true)
+	@Override
+	public User findByUP(String username,String password) {
+		User user = null;
+		try {
+			user = userDao.findByUP(username, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
 
 	@Transactional(readOnly=true)
 	@Override

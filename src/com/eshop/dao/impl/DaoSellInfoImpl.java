@@ -19,55 +19,56 @@ public class DaoSellInfoImpl implements ISellInfoDao{
 
 	@Override
 	public void save(SellInfo t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(SellInfo t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(SellInfo t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
 
 	@Override
 	public List<SellInfo> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellInfo").list();
 	}
 
 	@Override
 	public SellInfo findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (SellInfo) sessionFactory.getCurrentSession().createQuery("from SellInfo s where s.sellId=:sellId")
+				.setParameter("sellId", k).uniqueResult();
 	}
 
 	@Override
 	public List<SellInfo> findBySellNo(String sellNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellInfo s where s.sellNo like :sellNo")
+				.setParameter("sellNo", "%" + sellNo + "%").list();
 	}
 
 	@Override
 	public List<SellInfo> findBySubmitTime(String firsetTime, String secondTime) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellInfo where between firstTime=:firstTime and secondTime=:secondTime")
+				.setParameter("firstTime", firsetTime).setParameter("secondTime", secondTime).list();
+
 	}
 
 	@Override
 	public List<SellInfo> findByAdminId(int adminId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellInfo s where s.adminId like :adminId")
+				.setParameter("adminId", "%" + adminId + "%").list();
 	}
 
 	@Override
 	public List<SellInfo> findByUserId(int userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellInfo s where s.userId like :userId")
+				.setParameter("userId", "%" + userId + "%").list();
 	}
+
 }

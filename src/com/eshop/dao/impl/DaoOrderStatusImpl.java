@@ -18,43 +18,45 @@ public class DaoOrderStatusImpl implements IOrderStatusDao{
 
 	@Override
 	public void save(OrderStatus t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(OrderStatus t) throws Exception {
 		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(OrderStatus t) throws Exception {
 		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().delete(t);
 	}
 
 	@Override
 	public List<OrderStatus> findAll() throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from OrderStatus").list();
 	}
 
 	@Override
 	public OrderStatus findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (OrderStatus) sessionFactory.getCurrentSession().createQuery("from OrderStatus o where o.ispay=:ispay")
+				.setParameter("ispay", k).uniqueResult();
 	}
 
 	@Override
 	public List<OrderStatus> findByStatusName(String statusName) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from OrderStatus o where o.issend like :issend")
+				.setParameter("issend", "%" + statusName + "%").list();
 	}
 
 	@Override
 	public List<OrderStatus> findByOrderId(int orderId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from OrderStatus o where o.orderId like :orderId")
+				.setParameter("orderId", "%" + orderId + "%").list();
 	}
 }

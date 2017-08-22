@@ -76,11 +76,11 @@ function check_code(){
 };
 //提交注册表单
 function myform_submit(){
-	boolean email_flag = isEmail();
-	boolean name_flag = isName();
-	boolean password_flag = isPassword();
-	boolean repassword_flag = isRePassword();
-	boolean code_flag = check_code() ;
+	var email_flag = isEmail();
+	var name_flag = isName();
+	var password_flag = isPassword();
+	var repassword_flag = isRePassword();
+	var code_flag = check_code() ;
 	if(email_flag && name_flag && password_flag && repassword_flag && code_flag){
 		$("#registerForm").submit();
 	}

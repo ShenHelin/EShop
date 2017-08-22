@@ -18,43 +18,45 @@ public class DaoAccountImpl implements IAccountDao{
 
 	@Override
 	public void save(Account t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(Account t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(Account t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
 
 	@Override
 	public List<Account> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Account").list();
 	}
 
 	@Override
 	public Account findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (Account) sessionFactory.getCurrentSession().createQuery("from Account a where a.accountId=:accountId")
+				.setParameter("accountId", k).uniqueResult();
 	}
 
 	@Override
-	public Account findByAccountName(String accountName) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Account findByAccountName(String accountName) throws Exception {		
+		
+		return (Account) sessionFactory.getCurrentSession().createQuery("from Account a where a.accountName like :accountName")
+				.setParameter("accountName", "%" + accountName + "%").uniqueResult();
 	}
 
+
 	@Override
-	public List<Account> findByUserId(int userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Account> findByUserId(int userId)  {
+		List<Account> x =   sessionFactory.getCurrentSession().createQuery("from Account where user.userId=1").list();
+		System.out.println(x);
+		return x;
 	}
 }

@@ -39,7 +39,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		String msg = "error";
 		try {
 				shoppingCartDao.update(t);
-				msg = "success";
+				msg = "updateSuccess";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,7 +52,7 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		String msg = "error";
 		try {
 				shoppingCartDao.delete(t);
-				msg = "success";
+				msg = "deleteSuccess";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -123,5 +123,12 @@ public class ServiceShoppingCartImpl implements IShoppingCartService {
 		}
 		return shoppingCartList;
 	}
+	
+
+	
+	
+	
+	
+	
 
 }

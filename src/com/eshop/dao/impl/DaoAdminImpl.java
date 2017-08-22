@@ -50,7 +50,8 @@ public class DaoAdminImpl implements IAdminDao{
 	@Override
 	public Admin findByUserName(String username) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return (Admin) sessionFactory.getCurrentSession().createQuery("from Admin g where g.username=:username")
+				.setParameter("username", username).uniqueResult();
 	}
 
 }

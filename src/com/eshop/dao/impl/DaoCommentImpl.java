@@ -19,49 +19,49 @@ public class DaoCommentImpl implements ICommentDao{
 
 	@Override
 	public void save(Comment t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(Comment t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(Comment t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
 
 	@Override
 	public List<Comment> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Comment").list();
 	}
 
 	@Override
 	public Comment findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (Comment) sessionFactory.getCurrentSession().createQuery("from Comment c where c.commentId=:commentId")
+				.setParameter("commntId", k).uniqueResult();
 	}
 
 	@Override
 	public List<Comment> findByOrderItemId(int orderItemId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Comment c where c.orderItemId=:orderItemId")
+				.setParameter("orderItemId", orderItemId).list();
 	}
 
 	@Override
 	public List<Comment> findByUserId(int userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Comment c where c.userId=:userId")
+				.setParameter("userId", userId).list();
 	}
 
 	@Override
 	public List<Comment> findByCommentStatus(int commentStatus) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from Comment c where c.commentStatus=:commentStatus")
+				.setParameter("commentStatus", commentStatus).list();
 	}
+
 }

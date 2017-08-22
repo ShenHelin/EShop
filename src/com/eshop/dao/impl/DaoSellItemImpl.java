@@ -18,43 +18,42 @@ public class DaoSellItemImpl implements ISellItemDao{
 
 	@Override
 	public void save(SellItem t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(t);
 		
 	}
 
 	@Override
 	public void update(SellItem t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(t);
 		
 	}
 
 	@Override
 	public void delete(SellItem t) throws Exception {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(t);
 		
 	}
-
 	@Override
 	public List<SellItem> findAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellItem").list();
 	}
 
 	@Override
 	public SellItem findById(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return (SellItem) sessionFactory.getCurrentSession().createQuery("from SellItem s where s.sellItemId=:sellItemId")
+				.setParameter("shoppingCartId", k).uniqueResult();
 	}
 
 	@Override
 	public List<SellItem> findBySellId(int sellId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellItem s where s.sellId like :sellId")
+				.setParameter("sellId", "%" + sellId + "%").list();
 	}
 
 	@Override
 	public List<SellItem> findByGoodsId(int goodsId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession().createQuery("from SellItem s where s.goodsId like :goodsId")
+				.setParameter("goodsId", "%" + goodsId + "%").list();
 	}
+
 }

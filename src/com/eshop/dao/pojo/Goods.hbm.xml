@@ -35,21 +35,21 @@
         <many-to-one name="goodsClass" class="com.eshop.dao.pojo.GoodsClass" fetch="join">
             <column name="CLASSID" />
         </many-to-one>
-        <set name="sellItemSet" table="SELLITEM" inverse="true" lazy="false">
+        <set name="sellItemSet" table="SELLITEM" inverse="true" lazy="true">
             <key>
                 <column name="GOODSID" />
             </key>
             <one-to-many class="com.eshop.dao.pojo.SellItem" />
         </set>
         
-        <set name="shoppingCartSet" table="SHOPPINGCART" inverse="true" lazy="false">
+        <set name="shoppingCartSet" table="SHOPPINGCART" inverse="true" lazy="true">
         	<key>
         		<column name="GOODSID"></column>
         	</key>
         	<one-to-many class="com.eshop.dao.pojo.ShoppingCart"/>
         </set>
         
-        <set name="orderItemSet" table="ORDERITEM" inverse="true" lazy="false">
+        <set name="orderItemSet" table="ORDERITEM" inverse="true" lazy="true">
         	<key>
         		<column name="GOODSID"></column>
         	</key>

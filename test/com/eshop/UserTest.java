@@ -22,6 +22,7 @@ import com.eshop.dao.pojo.SellInfo;
 import com.eshop.dao.pojo.SellItem;
 import com.eshop.dao.pojo.ShoppingCart;
 import com.eshop.dao.pojo.User;
+import com.eshop.dao.pojo.UserAddress;
 import com.eshop.dao.pojo.UserInfo;
 
 public class UserTest {
@@ -173,6 +174,10 @@ public class UserTest {
 		
 	}
 	
+	@Test
+	public void insertUserAddress(){
+		
+	}
 	
 	
 	

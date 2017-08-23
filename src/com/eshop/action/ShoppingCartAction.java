@@ -1,7 +1,9 @@
 package com.eshop.action;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,13 +14,20 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.eshop.dao.pojo.Goods;
+import com.eshop.dao.pojo.OrderInfo;
+import com.eshop.dao.pojo.OrderItem;
+import com.eshop.dao.pojo.OrderStatus;
 import com.eshop.dao.pojo.ShoppingCart;
 import com.eshop.dao.pojo.User;
+import com.eshop.dao.pojo.UserAddress;
 import com.eshop.service.iservice.IGoodsService;
+import com.eshop.service.iservice.IOrderInfoService;
+import com.eshop.service.iservice.IOrderItemService;
+import com.eshop.service.iservice.IOrderStatusService;
 import com.eshop.service.iservice.IShoppingCartService;
+import com.eshop.service.iservice.IUserAddressService;
 import com.eshop.service.iservice.IUserService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 @Controller("shoppingCartAction")
@@ -33,7 +42,19 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 	private IUserService userService;	
 	@Autowired
 	@Qualifier("goodsService")
-	private IGoodsService goodsService;	
+	private IGoodsService goodsService;
+	@Autowired
+	@Qualifier("orderInfoService")
+	private IOrderInfoService orderInfoService;	
+	@Autowired
+	@Qualifier("orderItemService")
+	private IOrderItemService orderItemService;	
+	@Autowired
+	@Qualifier("orderStatusService")
+	private IOrderStatusService orderStatusService;	
+	@Autowired
+	@Qualifier("userAddressService")
+	private IUserAddressService userAddressService;	
 	
 	private String option;
 	
@@ -56,6 +77,18 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 	
 	
 	public String save() {
+		
+		
+		
+//		User user1 = (User) ActionContext.getContext().getSession().get("user");
+//		System.out.println(user1);
+//		UserAddress userAddress = new UserAddress("yulei", "DALIAN-QIANFENG", "150030", "13366666666", "1");
+//		userAddress.setUser(user1);
+//		
+//		userAddressService.save(userAddress);
+		
+		
+		
 		System.out.println("userId in action === " + shoppingCart.getUser().getUserId());
 		User user = userService.findById(shoppingCart.getUser().getUserId());
 		Goods goods = goodsService.findById(shoppingCart.getGoods().getGoodsId());
@@ -65,6 +98,10 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 		System.out.println("user in action === " + user);
 		shoppingCart.setGoods(goods);
 		return shoppingCartService.save(shoppingCart);
+		
+		
+		
+		
 		
 	}
 
@@ -138,20 +175,85 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 	public void setChkItem(String chkItem) {
 		this.chkItem = chkItem;
 	}
-	public String deleteSome() {
+	public String buySome() {
+		
+		double totalPrice = 0;
 		String[] chkValues = this.getChkItem().split(", ");
 		for(int i = 0; i < chkValues.length; i++){  
-                System.out.println(chkValues[i]);  
-                shoppingCart.setShoppingCartId(Integer.parseInt(chkValues[i]));
-                shoppingCartService.delete(shoppingCart);
-        }  
-		//return shoppingCartService.delete(shoppingCart);
+            System.out.println(chkValues[i]);  
+            shoppingCart = shoppingCartService.findById(Integer.parseInt(chkValues[i]));
+            Goods goods = goodsService.findById(shoppingCart.getGoods().getGoodsId());
+            totalPrice = totalPrice + goods.getPrice()*shoppingCart.getAmount();
+        }
+		
+
+		
+		//插入orderInfo
+		String userAddressStr = "";
+		String userAddressCode = "";
+		String orderPhone = "";
+		User user1 = (User) ActionContext.getContext().getSession().get("user");
+		User user = userService.findById(user1.getUserId());
+		System.out.println(user.getUserAddressSet());
+		for(UserAddress userAddress:user.getUserAddressSet()){
+			if(userAddress.getIsDefault().equals("1")){
+				userAddressStr = userAddress.getAddressName();
+				userAddressCode = userAddress.getAddressCode();
+				orderPhone = userAddress.getAddressPhone();
+			}
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String submitTime = sdf.format(new Date());
+		
+		OrderStatus orderStatus = new OrderStatus("1", "1");
+		
+		
+		OrderInfo orderInfo = new OrderInfo("1001", submitTime, user.getUsername(), userAddressStr, userAddressCode, orderPhone, 0);
+		orderInfo.setUser(user);
+		orderInfo.setOrderStatus(orderStatus);
+		orderInfo.setTotalPrice(totalPrice);
+		orderStatus.setOrderInfo(orderInfo);
+		orderInfo.setOrderStatus(orderStatus);
+		orderInfoService.save(orderInfo);
+		orderStatusService.save(orderStatus);
+		
+		
+		
+		
+		
+		
+		//double totalPrice = 0;
+		//String[] chkValues = this.getChkItem().split(", ");
+		for(int i = 0; i < chkValues.length; i++){  
+            System.out.println(chkValues[i]);  
+            //shoppingCart.setShoppingCartId(Integer.parseInt(chkValues[i]));
+            shoppingCart = shoppingCartService.findById(Integer.parseInt(chkValues[i]));
+            shoppingCartService.delete(shoppingCart);
+            
+            Goods goods = goodsService.findById(shoppingCart.getGoods().getGoodsId());
+            goods.setLeaveNum(goods.getLeaveNum()-shoppingCart.getAmount());
+            goodsService.update(goods);
+            //totalPrice = totalPrice + goods.getPrice()*shoppingCart.getAmount();
+            
+            OrderItem orderItem = new OrderItem(shoppingCart.getAmount(), goods.getPrice()*shoppingCart.getAmount());
+            orderItem.setGoods(goods);
+            orderItem.setOrderInfo(orderInfo);
+            orderItemService.save(orderItem);
+        }
+		
+		
+		
+		//插入sellInfo
+		
+		
+		
 		return "deleteSuccess";
 	}
 	
 	
 	
 }
+
 
 
 

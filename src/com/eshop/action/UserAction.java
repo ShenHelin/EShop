@@ -14,7 +14,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.eshop.dao.pojo.User;
+import com.eshop.dao.pojo.UserAddress;
 import com.eshop.dao.pojo.UserInfo;
+import com.eshop.service.iservice.IUserAddressService;
 import com.eshop.service.iservice.IUserInfoService;
 import com.eshop.service.iservice.IUserService;
 import com.opensymphony.xwork2.ActionContext;
@@ -28,7 +30,10 @@ public class UserAction implements ModelDriven<User>, RequestAware {
 	private IUserService userService;	
 	@Autowired
 	@Qualifier("userInfoService")
-	private IUserInfoService userInfoService;	
+	private IUserInfoService userInfoService;
+	@Autowired
+	@Qualifier("userAddressService")
+	private IUserAddressService userAddressService;	
 	
 	private User user = new User();
 	private String option;//
@@ -65,8 +70,13 @@ public class UserAction implements ModelDriven<User>, RequestAware {
 		UserInfo userInfo = new UserInfo(user.getUserInfo().getName(), user.getUserInfo().getSex(), user.getUserInfo().getPhone(), user.getUserInfo().getEmail(), user.getUserInfo().getRegTime());
 		user.setUserInfo(userInfo);
 		userInfo.setUser(user);
+		
+		
+		
 		if( userService.save(user).equals("success") && userInfoService.save(userInfo).equals("success")){
-			
+//			UserAddress userAddress = new UserAddress("yulei", "DALIAN-QIANFENG", "150030", "13366666666", "1");
+//			userAddress.setUser(user);
+//			userAddressService.save(userAddress);
 			return "registerSuccess";
 		}
 		return "error";

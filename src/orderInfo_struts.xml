@@ -11,7 +11,7 @@
 			</global-results>
 
 			<action name="orderInfo_*" class="orderInfoAction" method="{1}">
-				<result name="success" type="redirect">success.html</result>
+				<result name="success" type="dispatcher">orderInfo.jsp</result>
 			</action> 
 			
 	</package>

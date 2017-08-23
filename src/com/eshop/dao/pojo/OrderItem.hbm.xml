@@ -21,7 +21,7 @@
             <column name="GOODSID" />
         </many-to-one>
         
-        <set name="commentSet" table="COMMENT" inverse="true" lazy="false">
+        <set name="commentSet" table="COMMENT" inverse="true" lazy="true">
         	<key>
         		<column name="ORDERITEMID"></column>
         	</key>

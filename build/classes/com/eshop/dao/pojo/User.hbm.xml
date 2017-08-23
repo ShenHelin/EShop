@@ -23,28 +23,28 @@
             <one-to-many class="com.eshop.dao.pojo.UserAddress" />
         </set>
         
-        <set name="accountSet" table="ACCOUNT" inverse="true" lazy="false">
+        <set name="accountSet" table="ACCOUNT" inverse="true" lazy="true">
             <key>
                 <column name="USERID" />
             </key>
             <one-to-many class="com.eshop.dao.pojo.Account" />
         </set>
         
-         <set name="sellInfoSet" table="SELLINFO" inverse="true" lazy="false">
+         <set name="sellInfoSet" table="SELLINFO" inverse="true" lazy="true">
         	<key>
         		<column name="USERID"></column>
         	</key>
         	<one-to-many class="com.eshop.dao.pojo.SellInfo"/>
         </set>
         
-        <set name="shoppingCartSet" table="SHOPPINGCART" inverse="true" lazy="false">
+        <set name="shoppingCartSet" table="SHOPPINGCART" inverse="true" lazy="true">
         	<key>
         		<column name="USERID"></column>
         	</key>
         	<one-to-many class="com.eshop.dao.pojo.ShoppingCart"/>
         </set>
         
-        <set name="commentSet" table="COMMENT" inverse="true" lazy="false">
+        <set name="commentSet" table="COMMENT" inverse="true" lazy="true">
         	<key>
         		<column name="USERID"></column>
         	</key>

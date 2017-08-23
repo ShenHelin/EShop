@@ -69,8 +69,8 @@
 	<nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">苏宁易购</a>
-    </div>
+        <a class="navbar-brand" href="#">EShop</a>
+    </div>	
     <div>
         <ul class="nav navbar-nav">
             <li><a href="http://localhost:8080/EShop/goods_findAll.action">商品首页</a></li>
@@ -80,13 +80,11 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">jmeter</a></li>
-                    <li><a href="#">EJB</a></li>
-                    <li><a href="#">Jasper Report</a></li>
+                    <li><a href="http://localhost:8080/EShop/orderInfo_findByUserId.action?user.userId=${user.userId }">订单信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">分离的链接</a></li>
+                    <li><a href="#">#</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">另一个分离的链接</a></li>
+                    <li><a href="#">#</a></li>
                 </ul>
             </li>
         </ul>
@@ -105,7 +103,7 @@
             <hr>
         </div>
         <div >
-        <form action="http://localhost:8080/EShop/shoppingCart_deleteSome.action" method="post">
+        <form action="http://localhost:8080/EShop/shoppingCart_buySome.action" method="post">
             <div class="cart-heading" >
                 <div style="padding: 10px 0 0 10px">
                     <span style="margin-right: 200px;">
@@ -150,13 +148,12 @@
                             <a href="http://localhost:8080/EShop/shoppingCart_delete.action?shoppingCartId=${shoppingCart.shoppingCartId }" class="btn btn-primary btn-xs">删除</a>
                         </div>
                     </li>
-                    
-                    
-                    
-                   
+                
+                
+                
                 </c:forEach>
                 
-                	
+                
                 
                 
                 

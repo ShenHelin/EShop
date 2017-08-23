@@ -111,7 +111,7 @@ public class OrderInfo implements Serializable{
 	public String toString() {
 		return "OrderInfo [orderId=" + orderId + ", orderNo=" + orderNo + ", submitTime=" + submitTime + ", orderName="
 				+ orderName + ", orderAddress=" + orderAddress + ", orderCode=" + orderCode + ", orderPhone="
-				+ orderPhone + ", orderStatus=" + orderStatus.getOrderInfo().getOrderId() + ", totalPrice=" + totalPrice + ", user=" + user.getUsername() + "]";
+				+ orderPhone + ", orderStatus=" +  ", totalPrice=" + totalPrice + ", user=" + "]";
 	}
 	
 	

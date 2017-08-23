@@ -25,7 +25,7 @@
         	<one-to-many class="com.eshop.dao.pojo.SellInfo"/>
         </set>
         
-        <set name="goodsSet" table="GOODS" inverse="true" lazy="false">
+        <set name="goodsSet" table="GOODS" inverse="true" lazy="true">
         	<key>
         		<column name="ADMINID"></column>
         	</key>

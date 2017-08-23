@@ -49,7 +49,7 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">苏宁易购</a>
+        <a class="navbar-brand" href="#">EShop</a>
     </div>
     <div>
         <ul class="nav navbar-nav">
@@ -61,13 +61,11 @@
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">jmeter</a></li>
-                    <li><a href="#">EJB</a></li>
-                    <li><a href="#">Jasper Report</a></li>
+                    <li><a href="http://localhost:8080/EShop/orderInfo_findByUserId.action?user.userId=${user.userId }">订单信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">分离的链接</a></li>
+                    <li><a href="#">#</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">另一个分离的链接</a></li>
+                    <li><a href="#">#</a></li>
                 </ul>
             </li>
             <li><a href="http://localhost:8080/EShop/goods_findByAdminId.action">商品信息</a></li>
@@ -121,10 +119,9 @@
 						<img alt="" src="img/Image2.png" />
 						<div class="carousel-caption">
 							<h4>
-								First Thumbnail label
+								l
 							</h4>
 							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 							</p>
 						</div>
 					</div>
@@ -132,10 +129,8 @@
 						<img alt="" src="img/Image3.png" />
 						<div class="carousel-caption">
 							<h4>
-								Second Thumbnail label
 							</h4>
 							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 							</p>
 						</div>
 					</div>
@@ -143,10 +138,8 @@
 						<img alt="" src="img/Image1.png" />
 						<div class="carousel-caption">
 							<h4>
-								Third Thumbnail label
 							</h4>
 							<p>
-								Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
 							</p>
 						</div>
 					</div>

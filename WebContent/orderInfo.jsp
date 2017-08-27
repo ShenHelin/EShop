@@ -10,11 +10,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	
     <title>购物车</title>
     <meta charset="utf-8">
-    <link href="common/bootstrap.min.css" rel="stylesheet" media="screen">
-  	<script src="common/jquery-3.2.1.js" type="text/javascript"></script>
-  	<script src="common/bootstrap.min.js" type="text/javascript"></script>
+    
+    <link href="${pageContext.request.contextPath }/common/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="${pageContext.request.contextPath }/common/jquery-3.2.1.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath }/common/bootstrap.min.js" type="text/javascript"></script>
     
     <style type="text/css">
         .cart-heading{
@@ -66,19 +68,19 @@
 	<nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">苏宁易购</a>
+        <a class="navbar-brand" href="#">EShop</a>
     </div>
     <div>
         <ul class="nav navbar-nav">
-            <li><a href="http://localhost:8080/EShop/goods_findAll.action">商品首页</a></li>
-            <li class="active"><a href="http://localhost:8080/EShop/shoppingCart_findByUserId.action?user.userId=${user.userId }">购物车</a></li>
+            <li><a href="${pageContext.request.contextPath }/goods/findAll">商品首页</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath }/shoppingCart/findByUserId/${user.userId }">购物车</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    	我的
+                    	${sessionScope.user.username }
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="http://localhost:8080/EShop/orderInfo_findByUserId.action?user.userId=${user.userId }">订单信息</a></li>
+                    <li><a href="${pageContext.request.contextPath }/orderInfo/findByUserId?user.userId=${user.userId }">订单信息</a></li>
                     <li class="divider"></li>
                     <li><a href="#">#</a></li>
                     <li class="divider"></li>

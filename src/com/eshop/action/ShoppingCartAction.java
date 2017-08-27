@@ -7,11 +7,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.interceptor.RequestAware;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.eshop.dao.pojo.Goods;
 import com.eshop.dao.pojo.OrderInfo;
@@ -28,11 +37,11 @@ import com.eshop.service.iservice.IShoppingCartService;
 import com.eshop.service.iservice.IUserAddressService;
 import com.eshop.service.iservice.IUserService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("shoppingCartAction")
+@Controller
+@RequestMapping("shoppingCart")
 @Scope("prototype")
-public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAware{
+public class ShoppingCartAction {
 	
 	@Autowired
 	@Qualifier("shoppingCartService")
@@ -58,27 +67,13 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 	
 	private String option;
 	
-	private ShoppingCart shoppingCart = new ShoppingCart();
 	
 	
 
 	
-	private Map<String, Object> request;
-	@Override
-	public void setRequest(Map<String, Object> request) {
-		// TODO Auto-generated method stub
-		this.request=request;
-	}
-	@Override
-	public ShoppingCart getModel() {
-		// TODO Auto-generated method stub
-		return shoppingCart;
-	}
-	
-	
-	public String save() {
-		
-		
+
+	@RequestMapping(value="/{userId}&{goodsId}",method=RequestMethod.POST)
+	public String save(@PathVariable("userId") Integer userId,@PathVariable("goodsId") Integer goodsId,Map<String,Object> map) {
 		
 //		User user1 = (User) ActionContext.getContext().getSession().get("user");
 //		System.out.println(user1);
@@ -88,72 +83,85 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 //		userAddressService.save(userAddress);
 		
 		
+		String msg = "error";
 		
-		System.out.println("userId in action === " + shoppingCart.getUser().getUserId());
-		User user = userService.findById(shoppingCart.getUser().getUserId());
-		Goods goods = goodsService.findById(shoppingCart.getGoods().getGoodsId());
-		ShoppingCart shoppingCart = new ShoppingCart(1);
-		shoppingCart.setUser(user);
-		shoppingCart.setGoods(goods);
+		System.out.println("userId in action === " + userId);
+		User user = userService.findById(userId);
+		Goods goods = goodsService.findById(goodsId);
+		ShoppingCart shoppingCart1 = new ShoppingCart(1);
+		shoppingCart1.setUser(user);
+		shoppingCart1.setGoods(goods);
 		System.out.println("user in action === " + user);
-		shoppingCart.setGoods(goods);
-		return shoppingCartService.save(shoppingCart);
+		shoppingCart1.setGoods(goods);
 		
-		
+		msg = shoppingCartService.save(shoppingCart1);
+		return "success".equals(msg)?"redirect:/goods/findAll":"error";
 		
 		
 		
 	}
 
-	public String update() {
-		
-		return shoppingCartService.update(shoppingCart);
+	@RequestMapping(value="/{}",method=RequestMethod.PUT)
+	public String update(@ModelAttribute ShoppingCart shoppingCart) {
+		String msg = "error";
+		msg = shoppingCartService.update(shoppingCart);
+		return "success".equals(msg)?"redirect:/goods/findAll":"error";
 	}
 
-	public String delete() {
-		
-		return shoppingCartService.delete(shoppingCart);
+	@RequestMapping(value="delete/{shoppingCartId}",method=RequestMethod.DELETE)
+	public String delete(@PathVariable("shoppingCartId") Integer shoppingCartId) {
+		String msg = "error";
+		ShoppingCart shoppingCart = shoppingCartService.findById(shoppingCartId);
+		msg = shoppingCartService.delete(shoppingCart);
+		HttpSession session = getSession();
+		User user = (User) session.getAttribute("user");
+		return "deleteSuccess".equals(msg)?"redirect:/shoppingCart/findByUserId/"+user.getUserId():"error";
 	}
 
-	public String findAll() throws IOException {
+	@RequestMapping("findAll")
+	public String findAll(@ModelAttribute Goods goods,Map<String,Object> map) throws IOException {
 		String msg = "error";
 		List<ShoppingCart> shoppingCartList = shoppingCartService.findAll();
 		if (shoppingCartList != null && shoppingCartList.size() > 0) {
-			request.put("shoppingCartListFromServer", shoppingCartList);
+			map.put("shoppingCartListFromServer", shoppingCartList);
 			msg = "success";
 		}
 		
-		return msg;
+		return "success".equals(msg)?"redirect:/goods/findAll":"error";
 	}
 
-	public String findById() {
+	@RequestMapping(value="findById/{shoppingCartId}",method=RequestMethod.GET)
+	public String findById(@PathVariable("shoppingCartId") Integer shoppingCartId,Map<String,Object> map) {
 		String msg = "error";
-		ShoppingCart p = shoppingCartService.findById(shoppingCart.getShoppingCartId());
+		ShoppingCart p = shoppingCartService.findById(shoppingCartId);
 		List<ShoppingCart> shoppingCartList = null;
 		if (p != null) {
 			if ("update".equals(option)) {
-				request.put("shoppingCartFromServer", p);
-				msg = "updatesuccess";
+				map.put("shoppingCartFromServer", p);
+				msg = "updateSuccess";
 			} else {
 				shoppingCartList = new ArrayList<ShoppingCart>();
 				shoppingCartList.add(p);
-				request.put("shoppingCartListFromServer", shoppingCartList);
+				map.put("shoppingCartListFromServer", shoppingCartList);
 				msg = "findByIdSuccess";
 			}
 		}
-		request.put("shoppingCartFromServer", p);
-		return msg;
+		map.put("shoppingCartFromServer", p);
+		
+		return "findByIdSuccess".equals(msg)?"redirect:/shoppingCart/findByUserId":"error";
 	}
 	
-	
-	
-	public String findByUserId(){
-		String msg = "findByUserIdError";
-		User user3 = (User) ActionContext.getContext().getSession().get("user");
+	@RequestMapping(value="findByUserId/{userId}",method=RequestMethod.GET)
+	public String findByUserId(@PathVariable("userId") Integer userId,Map<String,Object> map){
+		String msg = "error";
+		
+/*		HttpSession session = getSession();
+		User user3 = (User) session.getAttribute("user");*/
+		
 //		List<ShoppingCart> shoppingCartList = shoppingCartService.findByUserId(shoppingCart.getUser().getUserId());
-		List<ShoppingCart> shoppingCartList = shoppingCartService.findByUserId(user3.getUserId());
+		List<ShoppingCart> shoppingCartList = shoppingCartService.findByUserId(userId);
 		if(shoppingCartList != null && shoppingCartList.size()>0){
-			request.put("shoppingCartListFromServer", shoppingCartList);
+			map.put("shoppingCartListFromServer", shoppingCartList);
 			msg = "findByUserIdSuccess";
 		}
 		for(ShoppingCart s:shoppingCartList){
@@ -165,7 +173,8 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 			s.setGoods(goods2);
 		}
 		System.out.println("shoppingCartList in action ========= "+shoppingCartList);
-		return msg;
+		
+		return "shoppingCart";
 	}
 	
 	private String chkItem;
@@ -175,10 +184,13 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 	public void setChkItem(String chkItem) {
 		this.chkItem = chkItem;
 	}
-	public String buySome() {
+	
+	@RequestMapping(value="buySome", method = RequestMethod.DELETE)
+	public String buySome(@RequestParam("chkItem") String[] chkValues,@ModelAttribute ShoppingCart shoppingCart,Map<String,Object> map) {
+		String msg = "error";
 		
 		double totalPrice = 0;
-		String[] chkValues = this.getChkItem().split(", ");
+		//String[] chkValues = this.getChkItem().split(", ");
 		for(int i = 0; i < chkValues.length; i++){  
             System.out.println(chkValues[i]);  
             shoppingCart = shoppingCartService.findById(Integer.parseInt(chkValues[i]));
@@ -192,7 +204,9 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 		String userAddressStr = "";
 		String userAddressCode = "";
 		String orderPhone = "";
-		User user1 = (User) ActionContext.getContext().getSession().get("user");
+		HttpSession session = getSession();
+		User user1 = (User) session.getAttribute("user");
+		//User user1 = (User) ActionContext.getContext().getSession().get("user");
 		User user = userService.findById(user1.getUserId());
 		System.out.println(user.getUserAddressSet());
 		for(UserAddress userAddress:user.getUserAddressSet()){
@@ -239,6 +253,8 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
             orderItem.setGoods(goods);
             orderItem.setOrderInfo(orderInfo);
             orderItemService.save(orderItem);
+            
+            msg = "deleteSuccess";
         }
 		
 		
@@ -246,12 +262,34 @@ public class ShoppingCartAction implements ModelDriven<ShoppingCart>, RequestAwa
 		//插入sellInfo
 		
 		
-		
-		return "deleteSuccess";
+		return "deleteSuccess".equals(msg)?"redirect:/shoppingCart/findByUserId/"+user1.getUserId():"error";
 	}
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static HttpSession getSession() { 
+	    HttpSession session = null; 
+	    try { 
+	        session = getRequest().getSession(); 
+	    } catch (Exception e) {} 
+	        return session; 
+	} 
+	public static HttpServletRequest getRequest() { 
+	    ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes(); 
+	    return attrs.getRequest(); 
+	} 
 }
 
 

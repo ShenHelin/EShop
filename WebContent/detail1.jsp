@@ -6,6 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+		
 		<meta charset="UTF-8">
 		<title></title>
 		<style type="text/css">
@@ -27,9 +28,10 @@
             }
 
 		</style>
-  		<link href="common/bootstrap.min.css" rel="stylesheet" media="screen">
-  		<script src="common/jquery-3.2.1.js" type="text/javascript"></script>
-  		<script src="common/bootstrap.min.js" type="text/javascript"></script>
+		
+		<link href="${pageContext.request.contextPath }/common/bootstrap.min.css" rel="stylesheet" media="screen">
+		<script src="${pageContext.request.contextPath }/common/jquery-3.2.1.js" type="text/javascript"></script>
+		<script src="${pageContext.request.contextPath }/common/bootstrap.min.js" type="text/javascript"></script>
       
 	</head>
 	
@@ -39,12 +41,12 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">苏宁易购</a>
+        <a class="navbar-brand" href="#">EShop</a>
     </div>
     <div>
         <ul class="nav navbar-nav">
-            <li><a href="http://localhost:8080/EShop/goods_findAll.action">商品首页</a></li>
-            <li><a href="cart.html">购物车</a></li>
+            <li><a href="http://localhost:8080/EShop/goods/findAll">商品首页</a></li>
+            <li><a href="http://localhost:8080/EShop/shoppingCart/findByUserId?user.userId=${user.userId }">购物车</a></li>
             <li class="dropdown active">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     	我的
@@ -77,8 +79,8 @@
                 <span style="font-size:20px; font-weight:bold;">商品详情页</span>
                 <div style="float: right;">
                     <!--<a class="btn  btn-xs btn-success" href="addcommodity" style="margin-right: 35px;">添加商品</a>-->
-                    <a class="btn btn-xs btn-success" href="cart.html" style="margin-right: 35px;">购物车</a>
-                    <a class="btn btn-xs btn-info" href="login.html">退 出</a>
+                    <a class="btn btn-xs btn-success" href="http://localhost:8080/EShop/shoppingCart/findByUserId?user.userId=${user.userId }" style="margin-right: 35px;">购物车</a>
+                    <a class="btn btn-xs btn-info" href="http://localhost:8080/EShop/user/quit">退 出</a>
                 </div>
             </div>
         </div>
@@ -110,7 +112,7 @@
                     	<span><%=goods.getAmount()-goods.getLeaveNum() %> </span>
                     </div>
                     <div  style="margin-top: 50px;">
-                        <a class="btn btn-success" style="width: 120px;" href="cart.html">加入购物车</a>
+                        <a class="btn btn-success" style="width: 120px;" href="#">加入购物车</a>
                         <a class="btn btn-warning" style="width: 120px;" href="#">立即购买</a>
                     </div>
             	</div>
@@ -118,26 +120,27 @@
             
             <div class="content">
             	<div class="img" style="margin:0 auto;width: 760px;">
-            		<img src="img/xq1.jpg" alt="" />
-            		<img src="img/xq2.jpg" alt="" />
-            		<img src="img/xq3.jpg" alt="" />
-            		<img src="img/xq4.jpg" alt="" />
-            		<img src="img/xq5.jpg" alt="" />
-            		<img src="img/xq6.jpg" alt="" />
-            		<img src="img/xq7.jpg" alt="" />
-            		<img src="img/xq8.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq1.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq2.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq3.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq4.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq5.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq6.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq7.jpg" alt="" />
+            		<img src="${pageContext.request.contextPath }/img/xq8.jpg" alt="" />
             	</div>
             </div>
-            
         </div>
     </div>
 </div>
-	
-	
-	
+
+
+
 <script>
 
 </script>
 
 </body>
 </html>
+
+

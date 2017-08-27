@@ -7,31 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.eshop.dao.pojo.Admin;
 import com.eshop.service.iservice.IAdminService;
 import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("adminAction")
+@Controller
 @Scope("prototype")
-public class AdminAction implements ModelDriven<Admin>, RequestAware{
+@RequestMapping("admin")
+public class AdminAction {
 	@Autowired
 	@Qualifier("adminService")
 	private IAdminService adminService;
-	private Admin admin = new Admin();
 	
-	private Map<String, Object> request;
-	@Override
-	public void setRequest(Map<String, Object> request) {
-		// TODO Auto-generated method stub
-		this.request=request;
-	}
-	@Override
-	public Admin getModel() {
-		// TODO Auto-generated method stub
-		return admin;
-	}
-
+	//@ModelAttribute Goods goods,Map<String,Object> map
 
 
 

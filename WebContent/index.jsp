@@ -6,7 +6,7 @@
 </head>
 <body>
 	 <script language="JavaScript">
- window.location.href = "http://localhost:8080/EShop/goods_findAll.action";
+ window.location.href = "http://localhost:8080/EShop/goods/findAll";
 </script>
 </body>
 </html>

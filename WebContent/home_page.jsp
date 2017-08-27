@@ -7,6 +7,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 	<head>
 	
 	
@@ -31,11 +32,11 @@
             }
 
 		</style>
-  		<link href="common/bootstrap.min.css" rel="stylesheet" media="screen">
-  		<script src="common/jquery-3.2.1.js" type="text/javascript"></script>
-  		<script src="common/bootstrap.min.js" type="text/javascript"></script>
-      
-      
+		
+		<link href="${pageContext.request.contextPath }/common/bootstrap.min.css" rel="stylesheet" media="screen">
+  		<script src="${pageContext.request.contextPath }/common/jquery-3.2.1.js" type="text/javascript"></script>
+  		<script src="${pageContext.request.contextPath }/common/bootstrap.min.js" type="text/javascript"></script>
+      	
 		<%
 		List<Goods> list = new ArrayList();
 			if(request.getAttribute("goodsListFromServer") != null){
@@ -53,30 +54,28 @@
     </div>
     <div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="http://localhost:8080/EShop/goods_findAll.action">商品首页</a></li>
-            <li><a href="http://localhost:8080/EShop/shoppingCart_findByUserId.action?user.userId=${user.userId }">购物车</a></li>
+            <li class="active"><a href="${pageContext.request.contextPath }/goods/findAll">商品首页</a></li>
+            <li><a href="${pageContext.request.contextPath }/shoppingCart/findByUserId/${user.userId }">购物车</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     	${user.username }
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="http://localhost:8080/EShop/orderInfo_findByUserId.action?user.userId=${user.userId }">订单信息</a></li>
+                    <li><a href="${pageContext.request.contextPath }/orderInfo/findByUserId/${user.userId }">订单信息</a></li>
                     <li class="divider"></li>
                     <li><a href="#">#</a></li>
                     <li class="divider"></li>
                     <li><a href="#">#</a></li>
                 </ul>
             </li>
-            <li><a href="http://localhost:8080/EShop/goods_findByAdminId.action">商品信息</a></li>
+            <li><a href="${pageContext.request.contextPath }/goods/findByAdminId/1">商品信息</a></li>
         </ul>
     </div>
     </div>
 </nav>
 	
-	
-	
-	
+
 	
 <div class="container">
 	<div class="row clearfix">
@@ -116,7 +115,7 @@
 				</ol>
 				<div class="carousel-inner">
 					<div class="item">
-						<img alt="" src="img/Image2.png" />
+						<img alt="" src="${pageContext.request.contextPath }/img/Image2.png" />
 						<div class="carousel-caption">
 							<h4>
 								l
@@ -126,7 +125,7 @@
 						</div>
 					</div>
 					<div class="item active">
-						<img alt="" src="img/Image3.png" />
+						<img alt="" src="${pageContext.request.contextPath }/img/Image3.png" />
 						<div class="carousel-caption">
 							<h4>
 							</h4>
@@ -135,7 +134,7 @@
 						</div>
 					</div>
 					<div class="item">
-						<img alt="" src="img/Image1.png" />
+						<img alt="" src="${pageContext.request.contextPath }/img/Image1.png" />
 						<div class="carousel-caption">
 							<h4>
 							</h4>
@@ -179,8 +178,8 @@
                 <span style="font-size:20px; font-weight:bold;">商品展示页</span>
                 <div style="float: right;">
                     <!--<a class="btn  btn-xs btn-success" href="addcommodity" style="margin-right: 35px;">添加商品</a>-->
-                    <a class="btn btn-xs btn-success" href="http://localhost:8080/EShop/shoppingCart_findByUserId.action?user.userId=${user.userId }" style="margin-right: 35px;">购物车</a>
-                    <a class="btn btn-xs btn-info" href="login.html">退 出</a>
+                    <a class="btn btn-xs btn-success" href="${pageContext.request.contextPath }/shoppingCart/findByUserId?user.userId=${sessionScope.user.userId }" style="margin-right: 35px;">购物车</a>
+                    <a class="btn btn-xs btn-info" href="${pageContext.request.contextPath }/user/quit">退 出</a>
                 </div>
             </div>
         </div>
@@ -191,7 +190,7 @@
             %>
                 <li class="spys li">
                     <div >
-                    	<a href="http://localhost:8080/EShop/goods_findById.action?goodsId=<%=list.get(i).getGoodsId() %>">
+                    	<a href="${pageContext.request.contextPath }/goods/findById/<%=list.get(i).getGoodsId() %>">
                         	<!-- <img width="80" height="100" src="img/xmsz-1.jpg"> -->
                         	<%-- <img width="80" height="100" src="upload/${goods.image }" /> --%>
                         	
@@ -199,11 +198,14 @@
                         </a>
                     </div>
                     <div >
-                        <a href="http://localhost:8080/EShop/goods_findById.action?goodsId=<%=list.get(i).getGoodsId() %>" ><%=list.get(i).getGoodsName() %></a>
+                        <a href="${pageContext.request.contextPath }/goods/findById/<%=list.get(i).getGoodsId() %>" ><%=list.get(i).getGoodsName() %></a>
                         <strong style="color:red;"><%=list.get(i).getPrice() %></strong>
                     </div>
                     <div >
-                        <a href="http://localhost:8080/EShop/shoppingCart_save.action?user.userId=${user.userId }&goods.goodsId=<%=list.get(i).getGoodsId() %>" class="btn btn-success" style="width: 120px;" >加入购物车</a>
+                        <%-- <a href="${pageContext.request.contextPath }/shoppingCart/${user.userId }&<%=list.get(i).getGoodsId() %>" class="btn btn-success" style="width: 120px;" >加入购物车</a> --%>
+                        <form action="${pageContext.request.contextPath }/shoppingCart/${user.userId }&<%=list.get(i).getGoodsId() %>" method="post">
+							<input type="submit" value="save" class="btn btn-success" style="width: 120px;" >
+						</form>
                     </div>
                 </li> 
                 

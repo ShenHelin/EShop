@@ -14,22 +14,12 @@ import com.opensymphony.xwork2.ModelDriven;
 
 @Controller("userAddressAction")
 @Scope("prototype")
-public class UserAddressAction implements ModelDriven<UserAddress>, RequestAware{
+public class UserAddressAction {
 	@Autowired
 	@Qualifier("userAddressService")
 	private IUserAddressService userAddressService;	
 	private UserAddress userAddress = new UserAddress();
 
+	//@ModelAttribute Goods goods,Map<String,Object> map
 	
-	private Map<String, Object> request;
-	@Override
-	public void setRequest(Map<String, Object> request) {
-		// TODO Auto-generated method stub
-		this.request=request;
-	}
-	@Override
-	public UserAddress getModel() {
-		// TODO Auto-generated method stub
-		return userAddress;
-	}
 }

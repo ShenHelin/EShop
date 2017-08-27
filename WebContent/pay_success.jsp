@@ -8,11 +8,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
     <title>添加商品</title>
     <meta charset="utf-8">
-    <link href="common/bootstrap.min.css" rel="stylesheet" media="screen">
-  	<script src="common/jquery-3.2.1.js" type="text/javascript"></script>
-  	<script src="common/bootstrap.min.js" type="text/javascript"></script>
+    
+    <link href="${pageContext.request.contextPath }/common/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="${pageContext.request.contextPath }/common/jquery-3.2.1.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath }/common/bootstrap.min.js" type="text/javascript"></script>
     
     <style type="text/css">
 
@@ -27,8 +29,8 @@
     </div>
     <div>
         <ul class="nav navbar-nav">
-            <li><a href="http://localhost:8080/EShop/goods_findAll.action">商品首页</a></li>
-            <li><a href="http://localhost:8080/EShop/shoppingCart_findByUserId.action?user.userId=${user.userId }">购物车</a></li>
+            <li><a href="http://localhost:8080/EShop/goods/findAll">商品首页</a></li>
+            <li><a href="http://localhost:8080/EShop/shoppingCart/findByUserId?user.userId=${user.userId }">购物车</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     	我的

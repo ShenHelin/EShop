@@ -7,33 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.eshop.dao.pojo.Account;
 import com.eshop.dao.pojo.Comment;
 import com.eshop.service.iservice.ICommentService;
 import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("commentAction")
+@Controller
 @Scope("prototype")
-public class CommentAction implements ModelDriven<Comment>, RequestAware{
+@RequestMapping("comment")
+public class CommentAction {
 	
 	@Autowired
 	@Qualifier("commentService")
 	private ICommentService commentService;	
 	
-	private Comment comment = new Comment();
+	//@ModelAttribute Goods goods,Map<String,Object> map
 	
-	private Map<String, Object> request;
-	@Override
-	public void setRequest(Map<String, Object> request) {
-		// TODO Auto-generated method stub
-		this.request=request;
-	}
 	
-	@Override
-	public Comment getModel() {
-		// TODO Auto-generated method stub
-		return comment;
-	}
 	
 }	

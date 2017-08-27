@@ -1,10 +1,9 @@
 package com.eshop.dao.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -13,8 +12,12 @@ import com.eshop.dao.idao.IGoodsDao;
 import com.eshop.dao.pojo.Goods;
 
 @Repository("goodsDao")
-public class DaoGoodsImpl implements IGoodsDao{
+public class DaoGoodsImpl implements IGoodsDao,Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
@@ -93,5 +96,22 @@ public class DaoGoodsImpl implements IGoodsDao{
 		return sessionFactory.getCurrentSession().createQuery("from Goods").setFirstResult((page - 1) * size)
 				.setMaxResults(size).list();
 	}
+	
+	
+	
+	
+	
+	
+	public List findByProperty(String propertyName, Object value) {
+        System.out.println("finding Addressbook instance with property: " + propertyName
+                + ", value: " + value);
+        try {
+            return sessionFactory.getCurrentSession().createQuery("from Goods g where g."+propertyName+"=:"+propertyName)
+    				.setParameter(propertyName, value).list();
+        } catch (RuntimeException re) {
+            re.printStackTrace();
+            throw re;
+        }
+    }
 
 }

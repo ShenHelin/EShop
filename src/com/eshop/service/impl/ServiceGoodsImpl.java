@@ -69,6 +69,9 @@ public class ServiceGoodsImpl implements IGoodsService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+
+		
 		return goodsList;
 	}
 

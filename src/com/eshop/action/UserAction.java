@@ -7,11 +7,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.interceptor.RequestAware;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.eshop.dao.pojo.User;
 import com.eshop.dao.pojo.UserAddress;
@@ -19,12 +25,10 @@ import com.eshop.dao.pojo.UserInfo;
 import com.eshop.service.iservice.IUserAddressService;
 import com.eshop.service.iservice.IUserInfoService;
 import com.eshop.service.iservice.IUserService;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("userAction")
-@Scope("prototype")
-public class UserAction implements ModelDriven<User>, RequestAware {
+@Controller
+@RequestMapping("user")
+public class UserAction {
 	@Autowired
 	@Qualifier("userService")
 	private IUserService userService;	
@@ -35,120 +39,140 @@ public class UserAction implements ModelDriven<User>, RequestAware {
 	@Qualifier("userAddressService")
 	private IUserAddressService userAddressService;	
 	
-	private User user = new User();
 	private String option;//
 	
-	private Map<String, Object> request;
-	@Override
-	public void setRequest(Map<String, Object> request) {
-		// TODO Auto-generated method stub
-		this.request=request;
-	}
-	@Override
-	public User getModel() {
-		// TODO Auto-generated method stub
-		return user;
-	}
 	
 	
-	
-	
-	public String save() {
-		
+	@RequestMapping("save")
+	public String save(@ModelAttribute User user) {
+		String msg = "error";
 		String regTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		user.getUserInfo().setRegTime(regTime);
-//		
-//		System.out.println(user.getUsername());
-//		System.out.println(user.getPassword());
-//		System.out.println("-------------------");
-//		System.out.println(user.getUserInfo().getName());
-//		System.out.println(user.getUserInfo().getPhone());
-//		System.out.println(user.getUserInfo().getRegTime());
-//		System.out.println(user.getUserInfo().getSex());
-//		System.out.println(user.getUserInfo().getEmail());
 		
 		UserInfo userInfo = new UserInfo(user.getUserInfo().getName(), user.getUserInfo().getSex(), user.getUserInfo().getPhone(), user.getUserInfo().getEmail(), user.getUserInfo().getRegTime());
 		user.setUserInfo(userInfo);
 		userInfo.setUser(user);
 		
-		
-		
 		if( userService.save(user).equals("success") && userInfoService.save(userInfo).equals("success")){
-//			UserAddress userAddress = new UserAddress("yulei", "DALIAN-QIANFENG", "150030", "13366666666", "1");
-//			userAddress.setUser(user);
-//			userAddressService.save(userAddress);
-			return "registerSuccess";
+			UserAddress userAddress = new UserAddress("yulei", "DALIAN-QIANFENG", "150030", "13366666666", "1");
+			userAddress.setUser(user);
+			userAddressService.save(userAddress);
+			msg= "registerSuccess";
 		}
-		return "error";
+		return "registerSuccess".equals(msg)?"login":"error";
 		
 	}
 
-	public String update() {
-		return userService.update(user);
-	}
-
-	public String delete() {
-		return userService.delete(user);
-	}
-
-	public String findAll() throws IOException {
+	@RequestMapping("update")
+	public String update(@ModelAttribute User user) {
 		String msg = "error";
-		List<User> userList = userService.findAll();
-		if (userList != null && userList.size() > 0) {
-			request.put("userListFromServer", userList);
-			msg = "success";
+		if("success".equals(userService.update(user))){
+			return "success";
 		}
-		for(int i = 0 ; i<userList.size() ; i++){
-			System.out.println(userList.get(i).getUsername());
-		}
-
-		
 		return msg;
 	}
 
-	public String findById() {
+	@RequestMapping("delete")
+	public String delete(@ModelAttribute User user) {
+		if("success".equals(userService.delete(user))){
+			return "success";
+		}
+		return "error";
+	}
+
+	@RequestMapping("findAll")
+	public String findAll(Map<String,Object> map) throws IOException {
+		String msg = "error";
+		List<User> userList = userService.findAll();
+		if (userList != null && userList.size() > 0) {
+			map.put("userListFromServer", userList);
+			msg = "success";
+			return "home_page";
+		}
+		return msg;
+	}
+
+	@RequestMapping("findById")
+	public String findById(@ModelAttribute User user,Map<String,Object> map) {
 		String msg = "error";
 		User p = userService.findById(user.getUserId());
 		List<User> userList = null;
 		if (p != null) {
 			if ("update".equals(option)) {
-				request.put("userFromServer", p);
+				map.put("userFromServer", p);
 				msg = "updatesuccess";
 			} else {
 				userList = new ArrayList<User>();
 				userList.add(p);
-				request.put("userListFromServer", userList);
+				map.put("userListFromServer", userList);
 				msg = "findByIdSuccess";
 			}
 		}
-		request.put("userFromServer", p);
 		return msg;
 	}
 	
-	public String findByName(){
+	@RequestMapping("findByName")
+	public String findByName(@ModelAttribute User user,Map<String,Object> map){
 		String msg = "error";
 		List<User> userList = userService.findByName(user.getUserInfo().getName());
 		if(userList != null && userList.size()>0){
-			request.put("userListFromServer", userList);
+			map.put("userListFromServer", userList);
 			msg = "success";
 		}
 		return msg;
 	}
 	
-	public String login(){
+	@RequestMapping(value="login",method=RequestMethod.POST)
+	public String login(@ModelAttribute User user,Map<String,Object> map){
 		System.out.println("login method.............");
-		String msg = "loginError";
 		User user1 = userService.findByUP(user.getUsername(), user.getPassword());
 		//System.out.println("user1Id === " + user1.getUserId()); 正确
 		if(user1 != null ){
-			request.put("userFromServer", user1);
-			ActionContext.getContext().getSession().put("user", user1);
-			msg = "loginSuccess";
+			HttpSession session = getSession();
+			map.put("userFromServer", user1);
+			//ActionContext.getContext().getSession().put("user", user1);
+			session.setAttribute("user", user1);
+			System.out.println("登录成功！！！");
+			return "redirect:/goods/findAll";
 		}
-		return msg;
+		return "redirect:/user/login";
+	}
+	
+	@RequestMapping("quit")
+	public String quit(){
+		return "login";
+	}
+	@RequestMapping("toRegister")
+	public String toRegister(){
+		return "register";
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static HttpSession getSession() { 
+	    HttpSession session = null; 
+	    try { 
+	        session = getRequest().getSession(); 
+	    } catch (Exception e) {} 
+	        return session; 
+	} 
+	public static HttpServletRequest getRequest() { 
+	    ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes(); 
+	    return attrs.getRequest(); 
+	} 
 	
 //	public String findByPrice() {
 //		String msg = "error";

@@ -12,11 +12,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
     <title>购物车</title>
     <meta charset="utf-8">
-    <link href="common/bootstrap.min.css" rel="stylesheet" media="screen">
-  	<script src="common/jquery-3.2.1.js" type="text/javascript"></script>
-  	<script src="common/bootstrap.min.js" type="text/javascript"></script>
+    
+    <link href="${pageContext.request.contextPath }/common/bootstrap.min.css" rel="stylesheet" media="screen">
+	<script src="${pageContext.request.contextPath }/common/jquery-3.2.1.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath }/common/bootstrap.min.js" type="text/javascript"></script>
     
     <style type="text/css">
         .cart-heading{
@@ -73,14 +75,14 @@
     </div>	
     <div>
         <ul class="nav navbar-nav">
-            <li><a href="http://localhost:8080/EShop/goods_findAll.action">商品首页</a></li>
+            <li><a href="http://localhost:8080/EShop/goods/findAll">商品首页</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     	${sessionScope.user.username}
                     <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="http://localhost:8080/EShop/orderInfo_findByUserId.action?user.userId=${user.userId }">订单信息</a></li>
+                    <li><a href="${pageContext.request.contextPath }/orderInfo/findByUserId/${user.userId }">订单信息</a></li>
                     <li class="divider"></li>
                     <li><a href="#">#</a></li>
                     <li class="divider"></li>
@@ -96,14 +98,14 @@
     <div >
         <div>
             <div style="float:right;">
-                <a class="btn  btn-xs btn-success" href="http://localhost:8080/EShop/goods_findAll.action" style="margin-right: 35px;">商品页</a>
+                <a class="btn  btn-xs btn-success" href="http://localhost:8080/EShop/goods/findAll" style="margin-right: 35px;">商品页</a>
                 <a class="btn btn-xs btn-info" href="login.html">退 出</a>
             </div>
             <h2>购物车</h2>
             <hr>
         </div>
         <div >
-        <form action="http://localhost:8080/EShop/shoppingCart_buySome.action" method="post">
+        <form action="http://localhost:8080/EShop/shoppingCart/buySome" method="post">
             <div class="cart-heading" >
                 <div style="padding: 10px 0 0 10px">
                     <span style="margin-right: 200px;">
@@ -145,7 +147,18 @@
                             <a data-type='subtr' href="javascript:void(0);" class="btn btn-default btn-xs">-</a>
                         </div>
                         <div class="li-del" >
-                            <a href="http://localhost:8080/EShop/shoppingCart_delete.action?shoppingCartId=${shoppingCart.shoppingCartId }" class="btn btn-primary btn-xs">删除</a>
+         <%--                	<form action="${pageContext.request.contextPath }/EShop/shoppingCart/${shoppingCart.shoppingCartId }" method="post">
+								<input type="hidden" name="_method" value="DELETE">
+								<input type="submit" value="delete" class="btn btn-primary btn-xs">
+							</form> --%>
+                            <%-- <a href="http://localhost:8080/EShop/shoppingCart/delete/${shoppingCart.shoppingCartId }" class="btn btn-primary btn-xs">删除</a> --%>
+                            <%-- <input type="button" class="btn btn-primary btn-xs" onclick="deleteShoppingCartItem(this)" value="删除" name="${shoppingCart.shoppingCartId }"/> --%> 
+                            
+                            
+                            
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-primary btn-xs" onclick="deleteShoppingCartItem(this)" value="${shoppingCart.shoppingCartId }" name="${shoppingCart.shoppingCartId }"></button>
+                            
                         </div>
                     </li>
                 
@@ -164,12 +177,15 @@
             <div style="float: right;height: 35px;width:330px;">总计：
                 <span id="money" style="color: red;font-size: 25px">￥0.00</span>
                 <!-- <input type="button" style="width: 130px;float:right;"  class="btn btn-success" onclick=" clearing();" value="结 算" /> -->
+                
+                <!-- <input type="hidden" name="_method" value="DELETE"> -->
                 <input type="submit" style="width: 130px;float:right;"  class="btn btn-success" value="结 算"/>
             </div>
             </form>
         </div>
     </div>
 </div>
+
 
 
 
@@ -270,6 +286,37 @@
         });
         $("#money").html('￥'+ sum +'.00');
     }
+    
+    function deleteShoppingCartItem(btn){
+    	alert(btn.val());
+    	alert(btn.val);
+    	alert(btn.value());
+    	alert(btn.value);
+    	$.ajax({
+            url:'http://localhost:8080/EShop/shoppingCart/delete/'+btn.val,
+            type:'post',
+            data:data,
+            success:function(data,status){
+				
+            },
+            error:function(data,status){
+
+            }
+        }); 
+    }
+    
+    $(document).ready(function(){  
+        $("#button1").click(function(){  
+              
+            $("#draw").attr("action","url1");   
+            $("form").submit();  
+        });  
+        $("#button2").click(function(){  
+              
+            $("#draw").attr("action","url2");   
+            $("form").submit();  
+        });  
+    });
     
 </script>
 </body>

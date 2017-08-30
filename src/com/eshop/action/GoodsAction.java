@@ -25,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.eshop.dao.pojo.Admin;
 import com.eshop.dao.pojo.Goods;
+import com.eshop.dao.pojo.GoodsClass;
 import com.eshop.service.iservice.IAdminService;
+import com.eshop.service.iservice.IGoodsClassService;
 import com.eshop.service.iservice.IGoodsService;
 
 @Controller
@@ -40,6 +42,11 @@ public class GoodsAction implements ServletResponseAware,Serializable {
 	@Autowired
 	@Qualifier("adminService")
 	private IAdminService adminService;
+	@Autowired
+	@Qualifier("goodsClassService")
+	private IGoodsClassService goodsClassService;
+	
+	
 	
 	private String option;
 	
@@ -64,11 +71,14 @@ public class GoodsAction implements ServletResponseAware,Serializable {
 		Admin admin = adminService.findById(1);
 		//System.out.println("adminId in Dao: "+admin.getAdminId());
 		goods.setAdmin(admin);
+		GoodsClass goodsClass = goodsClassService.findById(1);
+		goods.setGoodsClass(goodsClass);
+		
 		System.out.println("goodsName: " + goods.getGoodsName());
 		System.out.println("goodsPrice： " + goods.getPrice());
 		return "saveSuccess".equals(goodsService.save(goods))?"redirect:/goods/findByAdminId/1":"error";
 	}
-
+	
 //	@ModelAttribute
 //	public void before(@PathVariable("goodsId") int goodsId){
 //		System.out.println("goodsId: "+goodsId);
@@ -97,10 +107,9 @@ public class GoodsAction implements ServletResponseAware,Serializable {
 			//request.put("goodsListFromServer", goodsList);
 			map.put("goodsListFromServer", goodsList);
 			msg = "success";
-			return "home_page";
 		}
 		
-		return msg;
+		return "home_page";
 	}
 
 	@RequestMapping(value="findById/{goodsId}&{option}",method=RequestMethod.GET)
@@ -115,7 +124,7 @@ public class GoodsAction implements ServletResponseAware,Serializable {
 			} else {
 				goodsList = new ArrayList<Goods>();
 				goodsList.add(p);
-				map.put("goodsListFromServer", goodsList);
+				map.put("goodsFromServer", p);
 				msg = "findByIdSuccess";
 			}
 		}
@@ -168,7 +177,7 @@ public class GoodsAction implements ServletResponseAware,Serializable {
 		}
 		System.out.println("goodsList========="+goodsList);
 		
-		return "adminGoodsSuccess".equals(msg)?"admin_goodsList":"error";
+		return "admin_goodsList";
 	}
 
 	@RequestMapping(value="findByClassId/{classId}",method=RequestMethod.GET)

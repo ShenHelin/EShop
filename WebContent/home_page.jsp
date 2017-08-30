@@ -190,7 +190,7 @@
             %>
                 <li class="spys li">
                     <div >
-                    	<a href="${pageContext.request.contextPath }/goods/findById/<%=list.get(i).getGoodsId() %>">
+                    	<a href="${pageContext.request.contextPath }/goods/findById/<%=list.get(i).getGoodsId() %>&0">
                         	<!-- <img width="80" height="100" src="img/xmsz-1.jpg"> -->
                         	<%-- <img width="80" height="100" src="upload/${goods.image }" /> --%>
                         	
@@ -198,7 +198,7 @@
                         </a>
                     </div>
                     <div >
-                        <a href="${pageContext.request.contextPath }/goods/findById/<%=list.get(i).getGoodsId() %>" ><%=list.get(i).getGoodsName() %></a>
+                        <a href="${pageContext.request.contextPath }/goods/findById/<%=list.get(i).getGoodsId() %>&0" ><%=list.get(i).getGoodsName() %></a>
                         <strong style="color:red;"><%=list.get(i).getPrice() %></strong>
                     </div>
                     <div >

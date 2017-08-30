@@ -18,6 +18,7 @@ public class DaoGoodsImpl implements IGoodsDao,Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Autowired
 	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;

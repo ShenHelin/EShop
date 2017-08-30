@@ -166,7 +166,8 @@
 	        <input style="margin-top: 30px;" value="1" id="classId"  class="form-control" name="goodsClass.classId"  placeholder="classId" />
 	        
 	        <input type="hidden" name="_method" value="PUT">
-	        <input style="margin-top: 30px;" type="submit" class="btn btn-success btn-block" value="修 改"/>
+	       <!--  <input style="margin-top: 30px;" type="submit" class="btn btn-success btn-block" value="修 改"/> -->
+	        <button name="123" >xxx</button>
 	    	</form>
 		</c:otherwise>
     </c:choose>

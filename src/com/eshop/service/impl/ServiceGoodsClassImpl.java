@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.eshop.dao.idao.IGoodsClassDao;
 import com.eshop.dao.pojo.GoodsClass;
@@ -17,19 +18,21 @@ public class ServiceGoodsClassImpl implements IGoodsClassService {
 	@Qualifier("goodsClassDao")
 	private IGoodsClassDao goodsClassDao;
 
-
+	@Transactional
 	@Override
 	public String save(GoodsClass t) {
 		String msg = "error";
 		try {
 				goodsClassDao.save(t);
-				msg = "success";
+				msg = "saveSuccess";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("GoodsClassService   msg= " + msg);
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String update(GoodsClass t) {
 		String msg = "error";
@@ -42,6 +45,7 @@ public class ServiceGoodsClassImpl implements IGoodsClassService {
 		return msg;
 	}
 
+	@Transactional
 	@Override
 	public String delete(GoodsClass t) {
 		String msg = "error";
@@ -54,26 +58,31 @@ public class ServiceGoodsClassImpl implements IGoodsClassService {
 		return msg;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<GoodsClass> findAll() {
-		List<GoodsClass> goodsClassList = null;
+		List<GoodsClass> GoodsClassList = null;
 		try {
-			goodsClassList = goodsClassDao.findAll();
+			GoodsClassList = goodsClassDao.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return goodsClassList;
+		
+
+		
+		return GoodsClassList;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public GoodsClass findById(Integer k) {
-		GoodsClass goodsClass = null;
+		GoodsClass GoodsClass = null;
 		try {
-			goodsClass = goodsClassDao.findById(k);
+			GoodsClass = goodsClassDao.findById(k);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return goodsClass;
+		return GoodsClass;
 	}
 
 	@Override
@@ -85,37 +94,19 @@ public class ServiceGoodsClassImpl implements IGoodsClassService {
 	@Override
 	public List<GoodsClass> findByName(String className) {
 		// TODO Auto-generated method stub
-		List<GoodsClass> goodsClassList = null;
-		try {
-			goodsClassList =  goodsClassDao.findByName(className);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return goodsClassList;
+		return null;
 	}
 
 	@Override
 	public List<GoodsClass> findBySuperClass(String superClass) {
 		// TODO Auto-generated method stub
-		List<GoodsClass> goodsClassList = null;
-		try {
-			goodsClassList =  goodsClassDao.findBySuperClass(superClass);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return goodsClassList;
+		return null;
 	}
 
 	@Override
 	public List<GoodsClass> findByPage(int page, int size) {
 		// TODO Auto-generated method stub
-		List<GoodsClass> goodsClassList = null;
-		try {
-			goodsClassList =  goodsClassDao.findByPage(page, size);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return goodsClassList;
+		return null;
 	}
 
 }
